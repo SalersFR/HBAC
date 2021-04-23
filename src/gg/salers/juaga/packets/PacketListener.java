@@ -25,6 +25,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import net.minecraft.server.v1_8_R3.Packet;
+import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
 import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
 import net.minecraft.server.v1_8_R3.PacketPlayInFlying.PacketPlayInPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
@@ -65,7 +66,9 @@ public class PacketListener implements Listener{
             public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
             	if(packet instanceof PacketPlayInPosition) {
             		Packet<?> packetPosition = (PacketPlayInPosition) packet;
-            		Check.getInstance().handle(new JPacket(PacketType.POSITION, packetPosition), jPlayer);
+            		for(Check checks : jPlayer.getChecks()) {
+            			checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetPosition), jPlayer);
+            		}
             		jPlayer.getPastLocations().add(jPlayer.getPlayer().getLocation());
             		if(jPlayer.getPastLocations().size() > 2) {
             			jPlayer.setFrom(jPlayer.getPastLocations().get(1));
@@ -76,7 +79,9 @@ public class PacketListener implements Listener{
             	}else if(packet instanceof PacketPlayInUseEntity) {
             		int entityId = (int) Objects.requireNonNull(Reflection.invokeField(packet, "a"));
             		Packet<?> packetUse = (PacketPlayInUseEntity) packet;
-            		Check.getInstance().handle(new JPacket(PacketType.USE_ENTITY, packetUse), jPlayer);
+            		for(Check checks : jPlayer.getChecks()) {
+            			checks.handle(new JPacket(PacketType.USE_ENTITY, packetUse), jPlayer);
+            		}
             		
             	
             		if(((PacketPlayInUseEntity) packet).a() == EnumEntityUseAction.ATTACK) {
@@ -98,9 +103,15 @@ public class PacketListener implements Listener{
      
             	}else if(packet instanceof PacketPlayInFlying) {
             		Packet<?> packetFlying = (PacketPlayInFlying) packet;
-            		Check.getInstance().handle(new JPacket(PacketType.FLYING, packetFlying), jPlayer);
-            		;
+            		for(Check checks : jPlayer.getChecks()) {
+            			checks.handle(new JPacket(PacketType.FLYING, packetFlying), jPlayer);
+            		}
             	
+            	}else if(packet instanceof PacketPlayInArmAnimation) {
+            		Packet<?> packetAnimation = (PacketPlayInArmAnimation) packet;
+            		for(Check checks : jPlayer.getChecks()) {
+            			checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetAnimation), jPlayer);
+            		}
             	}
                 
                 super.channelRead(channelHandlerContext, packet);
