@@ -10,6 +10,7 @@ import gg.salers.juaga.packets.JPacket;
 import gg.salers.juaga.packets.PacketType;
 import gg.salers.juaga.utils.BoundingBox;
 import gg.salers.juaga.utils.JPlayerUseAction;
+import gg.salers.juaga.utils.PlayerUtils;
 
 public class ReachBoundingBoxCheck extends Check {
 
@@ -28,8 +29,8 @@ public class ReachBoundingBoxCheck extends Check {
 				BoundingBox boundingBox = new BoundingBox((Player)jPlayer.getLastTarget());
 				Location fromTargetBox = new Location(jPlayer.getPlayer().getWorld(), boundingBox.getMaxX(),
 						boundingBox.getMaxY(), boundingBox.getMaxZ());
-				double distanceX = fromTargetBox.getX() - jPlayer.getPlayer().getLocation().getX();
-				double distanceZ = fromTargetBox.getZ() - jPlayer.getPlayer().getLocation().getZ();
+				double distanceX = fromTargetBox.getX() - PlayerUtils.getEyeLocation(jPlayer.getPlayer()).getX();
+				double distanceZ = fromTargetBox.getZ() -  PlayerUtils.getEyeLocation(jPlayer.getPlayer()).getZ();
 				double distance = Math.hypot(distanceX, distanceZ);
 				double substracter = (distXZMove - lastDistXZMove)
 						+ (jPlayer.getLastTarget().getVelocity().length() * 2.5)
@@ -38,7 +39,7 @@ public class ReachBoundingBoxCheck extends Check {
 						+ (jPlayer.getLastTarget().getVelocity().getZ() * 2.5);
 				distance -= substracter;
 				double maxReach = 3.4;
-				if (jPlayer.getLastTarget().getLocation().add(0, -0.4001, 0).getBlock().getType() == Material.AIR) {
+				if (jPlayer.getLastTarget().getLocation().add(0, -0.4001, 0).getBlock().getType() != Material.AIR) {
 					maxReach = 3.2;
 				}
 				if (distance > maxReach) {

@@ -1,4 +1,5 @@
-package gg.salers.juaga.packets;s
+package gg.salers.juaga.packets;
+
 
 import java.util.Objects;
 
@@ -8,6 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -33,11 +35,16 @@ import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity.EnumEntityUseAction;
 public class PacketListener implements Listener{
 	@EventHandler
     public void onJoin(PlayerJoinEvent event){
-        injectPlayer(event.getPlayer());
+		
+		JPlayerManager.getInstance().jPlayers.put(event.getPlayer().getUniqueId(),
+				new JPlayer(event.getPlayer().getUniqueId()));
+       injectPlayer(event.getPlayer());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onLeave(PlayerQuitEvent event){
+    	JPlayerManager.getInstance().jPlayers.remove(event.getPlayer().getUniqueId(), 
+				JPlayerManager.getInstance().jPlayers.get(event.getPlayer().getUniqueId()));
         removePlayer(event.getPlayer());
     }
     private void removePlayer(Player player) {
@@ -51,18 +58,21 @@ public class PacketListener implements Listener{
     private void injectPlayer(Player player) {
     	JPlayer jPlayer = JPlayerManager.getInstance().getJPlayer(player);
         ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
+       
 
-            @SuppressWarnings("deprecation")
+       
 			@Override
             public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
             	if(packet instanceof PacketPlayInPosition) {
             		Packet<?> packetPosition = (PacketPlayInPosition) packet;
             		Check.getInstance().handle(new JPacket(PacketType.POSITION, packetPosition), jPlayer);
-            		jPlayer.setTo(player.getLocation());
-            	    Bukkit.getScheduler().scheduleAsyncRepeatingTask(Juaga.getInstance(),() -> {
-            	    	jPlayer.setFrom(player.getLocation());
-            	    	
-            	    },1L,0L);
+            		jPlayer.getPastLocations().add(jPlayer.getPlayer().getLocation());
+            		if(jPlayer.getPastLocations().size() > 2) {
+            			jPlayer.setFrom(jPlayer.getPastLocations().get(1));
+            			jPlayer.setTo(jPlayer.getPastLocations().get(0));
+            		}
+            		
+            	   
             	}else if(packet instanceof PacketPlayInUseEntity) {
             		int entityId = (int) Objects.requireNonNull(Reflection.invokeField(packet, "a"));
             		Packet<?> packetUse = (PacketPlayInUseEntity) packet;
@@ -77,17 +87,20 @@ public class PacketListener implements Listener{
             		}else if(((PacketPlayInUseEntity) packet).a() == EnumEntityUseAction.INTERACT_AT) {
             			jPlayer.setAction(JPlayerUseAction.INTERACT_AT);
             		}
+            		
             		for(Entity enties : jPlayer.getPlayer().getLocation().getChunk().getEntities()) {
             			if(enties.getEntityId() == entityId) {
             				jPlayer.setLastTarget((LivingEntity) enties);
             			}
             		}
-            		
+           
             		
      
             	}else if(packet instanceof PacketPlayInFlying) {
             		Packet<?> packetFlying = (PacketPlayInFlying) packet;
             		Check.getInstance().handle(new JPacket(PacketType.FLYING, packetFlying), jPlayer);
+            		;
+            	
             	}
                 
                 super.channelRead(channelHandlerContext, packet);

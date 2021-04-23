@@ -36,7 +36,7 @@ public class ReachDistanceCheck extends Check {
 						(jPlayer.getLastTarget().getVelocity().getZ() * 2.5);
 				distance -= substracter;
 				double maxReach = 3.4;
-				if(jPlayer.getLastTarget().getLocation().add(0,-0.4001, 0).getBlock().getType() == Material.AIR) {
+				if(jPlayer.getLastTarget().getLocation().add(0,-0.4001, 0).getBlock().getType() != Material.AIR) {
 					maxReach = 3.2;
 				}
 				if(distance > maxReach ) {

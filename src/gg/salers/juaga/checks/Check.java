@@ -15,8 +15,7 @@ public abstract class Check {
 
 		}
 	};
-	
-	
+
 	protected Check(String name) {
 		this.name = name;
 	}
@@ -29,11 +28,26 @@ public abstract class Check {
 
 	protected void fail(JPlayer jPlayer) {
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			if(player.hasPermission("ajaj.alerts")) {
-				player.sendMessage("&5AntiJAJ §f>&d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name);
-				
+			if (player.hasPermission("ajaj.alerts")) {
+				player.sendMessage("&5Juaga §f>&d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name);
+
 			}
 
 		}
+	}
+
+	protected void fail(JPlayer jPlayer, String more) {
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if (player.hasPermission("ajaj.alerts")) {
+				player.sendMessage("&5Juaga §f>&d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name
+						+ " §eMore info§f: " + more);
+
+			}
+
+		}
+	}
+	
+	protected long now() {
+		return System.currentTimeMillis();
 	}
 }
