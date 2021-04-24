@@ -96,7 +96,8 @@ public class Reflection {
 	        return null;
 	    }
 
-	    public static Object getEnumValue(Class<Enum> enumFullName, String enumValue) {
+	    @SuppressWarnings("unchecked")
+		public static Object getEnumValue(@SuppressWarnings("rawtypes") Class<Enum> enumFullName, String enumValue) {
 	        return Enum.valueOf(enumFullName, enumValue);
 	    }
 

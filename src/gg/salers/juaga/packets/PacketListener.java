@@ -3,7 +3,6 @@ package gg.salers.juaga.packets;
 
 import java.util.Objects;
 
-import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -14,7 +13,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import gg.salers.juaga.Juaga;
 import gg.salers.juaga.checks.Check;
 import gg.salers.juaga.data.JPlayer;
 import gg.salers.juaga.data.JPlayerManager;
@@ -26,6 +24,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.ChannelPromise;
 import net.minecraft.server.v1_8_R3.Packet;
 import net.minecraft.server.v1_8_R3.PacketPlayInArmAnimation;
+import net.minecraft.server.v1_8_R3.PacketPlayInBlockDig;
 import net.minecraft.server.v1_8_R3.PacketPlayInFlying;
 import net.minecraft.server.v1_8_R3.PacketPlayInFlying.PacketPlayInPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayInUseEntity;
@@ -111,6 +110,11 @@ public class PacketListener implements Listener{
             		Packet<?> packetAnimation = (PacketPlayInArmAnimation) packet;
             		for(Check checks : jPlayer.getChecks()) {
             			checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetAnimation), jPlayer);
+            		}
+            	}else if(packet instanceof PacketPlayInBlockDig) {
+            		Packet<?> packetDig = (PacketPlayInBlockDig) packet;
+            		for(Check checks : jPlayer.getChecks()) {
+            			checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetDig), jPlayer);
             		}
             	}
                 
