@@ -17,7 +17,7 @@ public class ReachBoundingBoxCheck extends Check {
 	private int preVL;
 	private double lastDistXZMove, distXZMove;
 
-	protected ReachBoundingBoxCheck() {
+	public  ReachBoundingBoxCheck() {
 		super("Reach [BoundingBox]");
 		// TODO Auto-generated constructor stub
 	}

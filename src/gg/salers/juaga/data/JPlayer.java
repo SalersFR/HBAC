@@ -93,7 +93,7 @@ public class JPlayer {
 		return player.getAllowFlight() || player.isFlying() || player.getGameMode() == GameMode.CREATIVE
 				|| player.getGameMode() == GameMode.SPECTATOR
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.PISTON_BASE
-				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.PISTON_EXTENSION
+				|| player.getLocation().add(2, 2, 2).getBlock().getType() == Material.PISTON_EXTENSION
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.PISTON_MOVING_PIECE
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.PISTON_STICKY_BASE
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.SLIME_BLOCK

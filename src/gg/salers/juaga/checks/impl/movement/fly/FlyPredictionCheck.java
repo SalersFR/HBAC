@@ -14,7 +14,7 @@ public class FlyPredictionCheck extends Check {
 	private int preVL;
 	private boolean wasWasCloseToGround, wasCloseToGround, isCloseToGround;
 
-	protected FlyPredictionCheck() {
+	public  FlyPredictionCheck() {
 		super("Fly [Y Prediction]");
 	}
 

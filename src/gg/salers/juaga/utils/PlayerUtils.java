@@ -3,6 +3,8 @@ package gg.salers.juaga.utils;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class PlayerUtils {
 	
@@ -26,4 +28,13 @@ public class PlayerUtils {
 	        return eye;
 	    }
 
+	 //credits to idk lol, but it's not from me, from overflow i think
+	 public static int getPotionEffectLevel(Player player, PotionEffectType pet) {
+	        for (PotionEffect pe : player.getActivePotionEffects()) {
+	            if (pe.getType().getName().equalsIgnoreCase(pet.getName())) {
+	                return pe.getAmplifier() + 1;
+	            }
+	        }
+	        return 0;
+	    }
 }

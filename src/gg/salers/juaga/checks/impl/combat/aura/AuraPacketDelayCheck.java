@@ -10,7 +10,7 @@ public class AuraPacketDelayCheck extends Check {
 	private long lastFlying;
 	private int preVL;
 
-	protected AuraPacketDelayCheck() {
+	public  AuraPacketDelayCheck() {
 		super("KillAura [Packet Delay]");
 		// TODO Auto-generated constructor stub
 	}
