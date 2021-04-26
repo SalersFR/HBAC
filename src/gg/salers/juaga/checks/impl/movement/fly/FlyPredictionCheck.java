@@ -20,8 +20,9 @@ public class FlyPredictionCheck extends Check {
 
 	@Override
 	public void handle(JPacket packet, JPlayer jPlayer) {
+		Bukkit.broadcastMessage("packetuyareuyare");
 		if (packet.getType() == PacketType.POSITION) {
-			Bukkit.broadcastMessage("packetuyareuyare");
+		
 			dist = jPlayer.getTo().getY() - jPlayer.getFrom().getY();
 			double predictedDist = (lastDist - 0.08) * 0.9800000190734863D;
 			this.lastDist = dist;

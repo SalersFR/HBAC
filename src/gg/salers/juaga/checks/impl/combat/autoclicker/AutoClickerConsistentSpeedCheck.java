@@ -6,8 +6,8 @@ import gg.salers.juaga.packets.JPacket;
 
 public class AutoClickerConsistentSpeedCheck extends Check{
 
-	public  AutoClickerConsistentSpeedCheck(String name) {
-		super(name);
+	public  AutoClickerConsistentSpeedCheck() {
+		super("AutoClicker [Consistent Speed]");
 		// TODO Auto-generated constructor stub
 	}
 

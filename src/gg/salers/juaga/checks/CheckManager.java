@@ -18,7 +18,7 @@ import gg.salers.juaga.checks.player.protocol.ProtocolSelfHitCheck;
 
 public class CheckManager {
 
-	final List<Class<? extends Check>> checks = Arrays.asList(AuraPacketDelayCheck.class, FlyAirJumpCheck.class,
+	public final static List<Class<? extends Check>> checks = Arrays.asList(AuraPacketDelayCheck.class, FlyAirJumpCheck.class,
 			FlyPredictionCheck.class, AutoClickerConsistentDelayCheck.class, AutoClickerFastClickCheck.class,
 			AutoClickerConsistentSpeedCheck.class, ReachBoundingBoxCheck.class, ReachDistanceCheck.class,
 			ProtocolInvalidPitchCheck.class, ProtocolSelfHitCheck.class, NoFallSpoofGroundCheck.class,

@@ -14,8 +14,8 @@ public class FlyAirJumpCheck extends Check {
 	private int preVL;
 	private double lastDist, dist;
 
-	public  FlyAirJumpCheck(String name) {
-		super(name);
+	public  FlyAirJumpCheck() {
+		super("Fly [Jump in mid Air]");
 		// TODO Auto-generated constructor stub
 	}
 
