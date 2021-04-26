@@ -21,7 +21,7 @@ public class HighJumpLimitCheck extends Check {
 
 	@Override
 	public void handle(JPacket packet, JPlayer jPlayer) {
-		if (packet.getType() == PacketType.POSITION) {
+		if (packet.getType() == PacketType.FLYING) {
 			if (!jPlayer.isExemptedMove()) {
 				double maxJumpHeight = 0.41999998688697815;
 				maxJumpHeight *= (PlayerUtils.getPotionEffectLevel(jPlayer.getPlayer(), PotionEffectType.JUMP) * 0.45);

@@ -18,7 +18,7 @@ public class NoFallSpoofGroundCheck extends Check{
 
 	@Override
 	public void handle(JPacket packet, JPlayer jPlayer) {
-		if(packet.getType() == PacketType.POSITION) {
+		if(packet.getType() == PacketType.FLYING) {
 			isCloseToGround = PlayerUtils.isCloseToGround(jPlayer.getTo());
 			isClientOnGround = jPlayer.getPlayer().isOnGround();
 			if(!wasWasCloseToGround && !wasCloseToGround && !isCloseToGround) {

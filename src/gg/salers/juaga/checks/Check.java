@@ -29,7 +29,7 @@ public abstract class Check {
 	protected void fail(JPlayer jPlayer) {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (player.hasPermission("juaga.alerts")) {
-				player.sendMessage("&5Juaga §f>&d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name);
+				player.sendMessage("§5Juaga §f>§d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name);
 
 			}
 
@@ -39,7 +39,7 @@ public abstract class Check {
 	protected void fail(JPlayer jPlayer, String more) {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			if (player.hasPermission("juaga.alerts")) {
-				player.sendMessage("&5Juaga §f>&d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name
+				player.sendMessage("§5Juaga §f>§d " + jPlayer.getPlayer().getName() + " §7has failed §d" + name
 						+ " §eMore info§f: " + more);
 
 			}

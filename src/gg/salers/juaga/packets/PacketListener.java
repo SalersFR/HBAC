@@ -1,7 +1,9 @@
 package gg.salers.juaga.packets;
 
+import java.lang.reflect.Field;
 import java.util.Objects;
 
+import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -61,24 +63,17 @@ public class PacketListener implements Listener {
 	}
 
 	private void injectPlayer(Player player) {
+
 		JPlayer jPlayer = JPlayerManager.getInstance().getJPlayer(player);
+		if (jPlayer == null)
+			return;
 		ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
 
 			@Override
 			public void channelRead(ChannelHandlerContext channelHandlerContext, Object packet) throws Exception {
-				if (packet instanceof PacketPlayInPosition) {
-					Packet<?> packetPosition = (PacketPlayInPosition) packet;
-					for (Check checks : jPlayer.getChecks()) {
-						checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetPosition), jPlayer);
-					}
-					System.out.println(jPlayer.getChecks().size());
-					jPlayer.getPastLocations().add(jPlayer.getPlayer().getLocation());
-					if (jPlayer.getPastLocations().size() > 2) {
-						jPlayer.setFrom(jPlayer.getPastLocations().get(1));
-						jPlayer.setTo(jPlayer.getPastLocations().get(0));
-					}
+				
 
-				} else if (packet instanceof PacketPlayInUseEntity) {
+			 if (packet instanceof PacketPlayInUseEntity) {
 					int entityId = (int) Objects.requireNonNull(Reflection.invokeField(packet, "a"));
 					Packet<?> packetUse = (PacketPlayInUseEntity) packet;
 					for (Check checks : jPlayer.getChecks()) {
@@ -102,8 +97,15 @@ public class PacketListener implements Listener {
 
 				} else if (packet instanceof PacketPlayInFlying) {
 					Packet<?> packetFlying = (PacketPlayInFlying) packet;
+
 					for (Check checks : jPlayer.getChecks()) {
 						checks.handle(new JPacket(PacketType.FLYING, packetFlying), jPlayer);
+					}
+					jPlayer.getPastLocations().add(jPlayer.getPlayer().getLocation());
+					if (jPlayer.getPastLocations().size() > 4) {
+						PacketPlayInFlying packetF = new PacketPlayInFlying();
+						jPlayer.setTo(new Location(jPlayer.getPlayer().getWorld(), packetF.a(), packetF.b(), packetF.c()));
+						jPlayer.setFrom(jPlayer.getPastLocations().get(1));
 					}
 
 				} else if (packet instanceof PacketPlayInArmAnimation) {
@@ -114,7 +116,7 @@ public class PacketListener implements Listener {
 				} else if (packet instanceof PacketPlayInBlockDig) {
 					Packet<?> packetDig = (PacketPlayInBlockDig) packet;
 					for (Check checks : jPlayer.getChecks()) {
-						checks.handle(new JPacket(PacketType.ARM_ANIMATION, packetDig), jPlayer);
+						checks.handle(new JPacket(PacketType.DIGGING, packetDig), jPlayer);
 					}
 				}
 
@@ -128,6 +130,11 @@ public class PacketListener implements Listener {
 				super.write(channelHandlerContext, packet, channelPromise);
 			}
 
+			@Override
+			public void exceptionCaught(ChannelHandlerContext channel, Throwable th) throws Exception {
+				th.printStackTrace();
+				super.exceptionCaught(channel, th);
+			}
 		};
 
 		ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel

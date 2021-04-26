@@ -100,7 +100,7 @@ public class JPlayer {
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.LADDER
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.VINE
 				|| player.getLocation().add(2, -2, 2).getBlock().getType() == Material.WEB
-				|| player.getVehicle() != null;
+				|| player.getVehicle() != null ||( this.to == null && this.from == null);
 
 	}
 

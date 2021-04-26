@@ -21,7 +21,7 @@ public class FlyAirJumpCheck extends Check {
 
 	@Override
 	public void handle(JPacket packet, JPlayer jPlayer) {
-		if (packet.getType() == PacketType.POSITION) {
+		if (packet.getType() == PacketType.FLYING) {
 			if (!jPlayer.isExemptedMove()) {
 				isCloseToGround = PlayerUtils.isCloseToGround(jPlayer.getTo());
 				if (!wasWasCloseToGround && !wasCloseToGround && !isCloseToGround) {

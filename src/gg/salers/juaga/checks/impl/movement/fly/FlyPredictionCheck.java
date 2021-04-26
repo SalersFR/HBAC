@@ -10,6 +10,7 @@ import gg.salers.juaga.utils.PlayerUtils;
 
 public class FlyPredictionCheck extends Check {
 
+
 	private double lastDist, dist;
 	private int preVL;
 	private boolean wasWasCloseToGround, wasCloseToGround, isCloseToGround;
@@ -20,8 +21,8 @@ public class FlyPredictionCheck extends Check {
 
 	@Override
 	public void handle(JPacket packet, JPlayer jPlayer) {
-		Bukkit.broadcastMessage("packetuyareuyare");
-		if (packet.getType() == PacketType.POSITION) {
+		
+		if (packet.getType() == PacketType.FLYING) {
 		
 			dist = jPlayer.getTo().getY() - jPlayer.getFrom().getY();
 			double predictedDist = (lastDist - 0.08) * 0.9800000190734863D;
