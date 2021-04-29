@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import gg.salers.juaga.jplayer.JPlayerManager;
+import gg.salers.juaga.listener.BukkitEvents;
 import gg.salers.juaga.packets.listener.PacketListener;
 
 public class Juaga extends JavaPlugin {
@@ -31,6 +32,7 @@ public class Juaga extends JavaPlugin {
 	
 	private void registerEvents() {
 		Bukkit.getPluginManager().registerEvents(new PacketListener(),this);
+		Bukkit.getPluginManager().registerEvents(new BukkitEvents(),this);
 	}
 	
 	

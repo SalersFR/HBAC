@@ -43,10 +43,10 @@ public class ReachA extends Check {
 				if(++threshold > 7.5f) {
 					fail(jplayer, "Reach (A)");
 				}
-			}else threshold *= 0.75;
+			}else threshold *= 0.775;//for prevent falses
 			
 		}else if(jPacket.getType() == PacketType.FLYING) {
-			pastVictimLocations.add(jplayer.getAttacked().getLocation());//every tick, adding the victim in location in a tick.
+			pastVictimLocations.add(jplayer.getAttacked().getLocation());//every tick, adding the victim in location in a list.
 		}
 		
 	}

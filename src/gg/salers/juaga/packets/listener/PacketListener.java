@@ -51,6 +51,38 @@ public class PacketListener implements Listener {
 						}
 					}
 				});
+		ProtocolLibrary.getProtocolManager()
+				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.POSITION) {
+					public void onPacketReceiving(PacketEvent event) {
+						for (Check checks : jPlayer.getChecks()) {
+							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.POSITION), jPlayer);
+						}
+					}
+				});
+		ProtocolLibrary.getProtocolManager()
+				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.BLOCK_DIG) {
+					public void onPacketReceiving(PacketEvent event) {
+						for (Check checks : jPlayer.getChecks()) {
+							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.DIGGING), jPlayer);
+						}
+					}
+				});
+		ProtocolLibrary.getProtocolManager()
+				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.ARM_ANIMATION) {
+					public void onPacketReceiving(PacketEvent event) {
+						for (Check checks : jPlayer.getChecks()) {
+							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.ARM_ANIMATION), jPlayer);
+						}
+					}
+				});
+		ProtocolLibrary.getProtocolManager()
+				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.BLOCK_PLACE) {
+					public void onPacketReceiving(PacketEvent event) {
+						for (Check checks : jPlayer.getChecks()) {
+							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.BLOCK_PLACE), jPlayer);
+						}
+					}
+				});
 	}
 
 	@EventHandler
@@ -66,10 +98,11 @@ public class PacketListener implements Listener {
 
 		}
 	}
+
 	@EventHandler
 	public void onQuit(PlayerQuitEvent event) {
 		JPlayer jPlayer = Juaga.getInstance().getPlayerManager().getJPlayer(event.getPlayer());
-		Juaga.getInstance().getPlayerManager().jPlayers.remove(event.getPlayer().getUniqueId(),jPlayer);
+		Juaga.getInstance().getPlayerManager().jPlayers.remove(event.getPlayer().getUniqueId(), jPlayer);
 	}
 
 }

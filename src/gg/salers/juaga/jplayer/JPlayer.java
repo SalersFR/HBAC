@@ -13,7 +13,22 @@ import gg.salers.juaga.features.checks.Check;
 import gg.salers.juaga.packets.JPacketUseAction;
 
 public class JPlayer {
-	
+
+	private Location from, to;
+	private Player player;
+	private UUID uuid;
+	private JPacketUseAction action;
+	private Entity attacked;
+	private double lastDeltaY, deltaY;
+
+	private List<Check> checks = new ArrayList<>();
+
+	public JPlayer(UUID uuid) {
+		this.uuid = uuid;
+		this.player = Bukkit.getPlayer(uuid);
+
+	}
+
 	public List<Check> getChecks() {
 		return checks;
 	}
@@ -22,34 +37,26 @@ public class JPlayer {
 		this.checks = checks;
 	}
 
-	private Location from,to;
-	private Player player;
-	private UUID uuid;
-	private JPacketUseAction action;
-	private Entity attacked;
-	
-	private List<Check> checks = new ArrayList<>();
-	public JPlayer(UUID uuid) {
-	   this.uuid = uuid;
-	   this.player = Bukkit.getPlayer(uuid);
-		 
-	}
-	
 	public Location getFrom() {
 		return from;
 	}
+
 	public Location getTo() {
 		return to;
 	}
+
 	public Player getPlayer() {
 		return player;
 	}
+
 	public UUID getUuid() {
 		return uuid;
 	}
+
 	public void setFrom(Location from) {
 		this.from = from;
 	}
+
 	public void setTo(Location to) {
 		this.to = to;
 	}
@@ -69,7 +76,21 @@ public class JPlayer {
 	public void setAttacked(Entity attacked) {
 		this.attacked = attacked;
 	}
-	
-	
+
+	public double getLastDeltaY() {
+		return lastDeltaY;
+	}
+
+	public void setLastDeltaY(double lastDeltaY) {
+		this.lastDeltaY = lastDeltaY;
+	}
+
+	public double getDeltaY() {
+		return deltaY;
+	}
+
+	public void setDeltaY(double deltaY) {
+		this.deltaY = deltaY;
+	}
 
 }
