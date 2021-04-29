@@ -1,36 +1,27 @@
 package gg.salers.juaga.utils;
 
-import java.util.Collection;
+import org.bukkit.util.Vector;
 
 public class MathUtils {
 
+	public static int msToTicks(final double time) {
+		return (int) Math.round(time / 50.0);
+	}
+	// credits to Tecnio for the method above
 
-	public static double getVariance(final Collection<? extends Number> data) {
-		int count = 0;
+	public static double getHorizontalDistanceToHitBox(Vector from, Vector to) {
+		double nearestX = clamp(from.getX(), to.getX() - 0.4, to.getX() + 0.4);
+		double nearestZ = clamp(from.getZ(), to.getZ() - 0.4, to.getZ() + 0.4);
 
-		double sum = 0.0;
-		double variance = 0.0;
+		double distX = from.getX() - nearestX;
+		double distZ = from.getZ() - nearestZ;
 
-		double average;
-
-		for (final Number number : data) {
-			sum += number.doubleValue();
-			++count;
-		}
-
-		average = sum / count;
-
-		for (final Number number : data) {
-			variance += Math.pow(number.doubleValue() - average, 2.0);
-		}
-
-		return variance;
+		return Math.hypot(distX, distZ);
 	}
 
-	public static double getStandardDeviation(final Collection<? extends Number> data) {
-		final double variance = getVariance(data);
-
-		return Math.sqrt(variance);
+	public static double clamp(double val, double min, double max) {
+		return Math.max(min, Math.min(max, val));
 	}
-	//Credits to Medusa for the 2 methods above
+	//credits to Rowin
+
 }

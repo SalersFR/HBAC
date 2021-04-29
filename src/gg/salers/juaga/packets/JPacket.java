@@ -1,24 +1,30 @@
 package gg.salers.juaga.packets;
 
-import net.minecraft.server.v1_8_R3.Packet;
+import com.comphenix.protocol.events.PacketContainer;
 
 public class JPacket {
 	
 	private PacketType type;
-	private Packet<?> rawPacket;
-	
-	public JPacket(PacketType type, Packet<?> raw) {
-		this.type = type;
-		this.rawPacket = raw;
-	}
-	
+	private PacketContainer packetContainer;
+
 	public PacketType getType() {
 		return type;
 	}
 
-	public Packet<?> getRawPacket() {
-		return rawPacket;
+	public void setType(PacketType type, PacketContainer container) {
+		this.type = type;
+		this.packetContainer = container;
 	}
+
+	public JPacket(PacketType type) {
+		this.type = type;
+	}
+
+	public PacketContainer getPacketContainer() {
+		return packetContainer;
+	}
+	
+	
 	
 	
 
