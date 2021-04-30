@@ -19,7 +19,16 @@ public class JPlayer {
 	private UUID uuid;
 	private JPacketUseAction action;
 	private Entity attacked;
-	private double lastDeltaY, deltaY;
+	private double lastDeltaY, deltaY,ping;
+	public double getPing() {
+		return ping;
+	}
+
+	public void setPing(double ping) {
+		this.ping = ping;
+	}
+
+	private long lastKeepAlive;
 
 	private List<Check> checks = new ArrayList<>();
 
@@ -93,4 +102,13 @@ public class JPlayer {
 		this.deltaY = deltaY;
 	}
 
+	public long getLastKeepAlive() {
+		return lastKeepAlive;
+	}
+
+	public void setLastKeepAlive(long lastKeepAlive) {
+		this.lastKeepAlive = lastKeepAlive;
+	}
+
+	
 }

@@ -83,6 +83,17 @@ public class PacketListener implements Listener {
 						}
 					}
 				});
+		ProtocolLibrary.getProtocolManager()
+		.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.KEEP_ALIVE, PacketType.Play.Server.KEEP_ALIVE) {
+			public void onPacketReceiving(PacketEvent event) {
+				jPlayer.setPing((double) System.currentTimeMillis() - jPlayer.getLastKeepAlive());
+			
+			}
+			 @Override
+			public void onPacketSending(PacketEvent event) {
+				jPlayer.setLastKeepAlive(System.currentTimeMillis());
+			}
+		});
 	}
 
 	@EventHandler

@@ -20,36 +20,52 @@ public class ReachA extends Check {
 	private float threshold;
 	List<Location> pastVictimLocations = new ArrayList<>();
 
+	/*
+	 * Here is a 3.3 Reach Detection, should not false too much
+	 */
 	@Override
 	public void handle(JPacket jPacket, JPlayer jplayer) {
 		if(jplayer.getAttacked() == null ) return;
 		if(jPacket.getType() == PacketType.USE_ENTITY) {
 			if(jplayer.getAction() == JPacketUseAction.ATTACK) {
 			
-			pastVictimLocations.add(jplayer.getAttacked().getLocation());
+			
 			
 			if(pastVictimLocations.size() < 1) return;
 		
 			Location attackerLocation = jplayer.getPlayer().getLocation(); //getting the basic location of the attacker
-			int victimPing = ((CraftPlayer)jplayer.getAttacked()).getHandle().ping; //getting the ping of the victim
-			if( victimPing == 0) victimPing = 49; //for bots or no-ping cheats
-			Location victimLocation = pastVictimLocations.get(pastVictimLocations.size() - MathUtils.msToTicks((double)victimPing)); //try to get the location with victim's ping in ticks
+			double victimPing = jplayer.getPing(); //getting the ping of the victim with packets
+			if( victimPing == 0) victimPing = 51; //for bots or no-ping cheats
+			Location victimLocation = pastVictimLocations.get(pastVictimLocations.size() - MathUtils.msToTicks(victimPing)); //try to get the location with victim's ping in ticks
 			Vector victim = victimLocation.toVector().setY(0); //so with that we don't care about y
 			Vector attacker = attackerLocation.toVector().setY(0);
-			float distance = (float) (MathUtils.getHorizontalDistanceToHitBox(victim, attacker)); // 0.56569 (credits to minecraftanticheatcommunity for this number) due to hitbox and some stuff
-			if(distance > 15f) return; //for patching a bug 
 			
-			if(distance > 3.1f) {
-				if(++threshold > 7.5f) {
-					fail(jplayer, "Reach (A)");
+			try {
+			 float distance = (float) (MathUtils.getHorizontalDistanceToHitBox(victim, attacker)); // distance calcul with taking care of 1.8 hitboxes
+			 if(distance > 15f) return; //for patching a bug 
+				float distanceBukkit = (float) jplayer.getAttacked().getLocation().distance(jplayer.getPlayer().getLocation()); //for being sure if the player is cheating
+				
+				if(distance > 3.1f && distanceBukkit > 3.1f) {
+					if(++threshold > 7.5f) {
+						fail(jplayer, "Reach (A)");
+					}
+				}else threshold *= 0.775;//for prevent falses
+				
+				
+			}catch(ArrayIndexOutOfBoundsException e ) {
+				
 				}
-			}else threshold *= 0.775;//for prevent falses
+			}
 			
-		}else if(jPacket.getType() == PacketType.FLYING) {
-			pastVictimLocations.add(jplayer.getAttacked().getLocation());//every tick, adding the victim in location in a list.
-		}
+			
+				
+			}else if(jPacket.getType() == PacketType.FLYING) {
+				pastVictimLocations.add(jplayer.getAttacked().getLocation());
+			
+			
 		
-	}
-}
+	
+			}
+		}
 
-}
+	}
