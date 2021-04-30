@@ -36,11 +36,13 @@ public class ReachA extends Check {
 			Location attackerLocation = jplayer.getPlayer().getLocation(); //getting the basic location of the attacker
 			double victimPing = jplayer.getPing(); //getting the ping of the victim with packets
 			if( victimPing == 0) victimPing = 51; //for bots or no-ping cheats
-			Location victimLocation = pastVictimLocations.get(pastVictimLocations.size() - MathUtils.msToTicks(victimPing)); //try to get the location with victim's ping in ticks
-			Vector victim = victimLocation.toVector().setY(0); //so with that we don't care about y
-			Vector attacker = attackerLocation.toVector().setY(0);
+			
+			
 			
 			try {
+				Location victimLocation = pastVictimLocations.get(pastVictimLocations.size() - MathUtils.msToTicks(victimPing)); //try to get the location with victim's ping in ticks
+				Vector victim = victimLocation.toVector().setY(0); //so with that we don't care about y
+				Vector attacker = attackerLocation.toVector().setY(0);
 			 float distance = (float) (MathUtils.getHorizontalDistanceToHitBox(victim, attacker)); // distance calcul with taking care of 1.8 hitboxes
 			 if(distance > 15f) return; //for patching a bug 
 				float distanceBukkit = (float) jplayer.getAttacked().getLocation().distance(jplayer.getPlayer().getLocation()); //for being sure if the player is cheating

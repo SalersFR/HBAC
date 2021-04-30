@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import gg.salers.juaga.features.checks.combat.killaura.KillAuraA;
 import gg.salers.juaga.features.checks.combat.reach.ReachA;
 import gg.salers.juaga.features.checks.move.fly.FlyA;
 import gg.salers.juaga.jplayer.JPlayer;
@@ -25,7 +26,7 @@ public abstract class Check {
 	
 	public abstract void handle(JPacket jPacket, JPlayer jplayer);
 	
-	public final  List<Class<? extends Check>> checks = Arrays.asList(ReachA.class,FlyA.class);
+	public final  List<Class<? extends Check>> checks = Arrays.asList(ReachA.class,FlyA.class, KillAuraA.class);
 	
 	protected void fail(JPlayer player,String name) {
 		for(Player staff : Bukkit.getOnlinePlayers()) {
