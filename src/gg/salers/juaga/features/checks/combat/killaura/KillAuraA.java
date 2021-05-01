@@ -8,6 +8,10 @@ import gg.salers.juaga.packets.PacketType;
 public class KillAuraA extends Check {
 
 	private long lastFlying;
+	
+	public KillAuraA() {
+		super("KillAura (A)");
+	}
 	@Override
 	public void handle(JPacket jPacket, JPlayer jplayer) {
 		if(jPacket.getType() == PacketType.FLYING) {
@@ -16,7 +20,7 @@ public class KillAuraA extends Check {
 			long deltaFlying = System.currentTimeMillis() - lastFlying;
 			if(jplayer.getPing() < 150) {
 				if(deltaFlying < 25) {
-					fail(jplayer, "KillAura (A)");
+					fail(jplayer);
 				}
 			}
 		}

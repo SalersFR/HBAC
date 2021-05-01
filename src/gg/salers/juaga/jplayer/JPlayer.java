@@ -1,6 +1,7 @@
 package gg.salers.juaga.jplayer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,12 +15,13 @@ import gg.salers.juaga.packets.JPacketUseAction;
 
 public class JPlayer {
 
-	private Location from, to;
+	private Location from, to,past,pastPast;
 	private Player player;
 	private UUID uuid;
 	private JPacketUseAction action;
 	private Entity attacked;
 	private double lastDeltaY, deltaY,ping;
+	public List<Location> pastPositions = new LinkedList<>();
 	public double getPing() {
 		return ping;
 	}
@@ -109,6 +111,24 @@ public class JPlayer {
 	public void setLastKeepAlive(long lastKeepAlive) {
 		this.lastKeepAlive = lastKeepAlive;
 	}
+
+	public Location getPast() {
+		return past;
+	}
+
+	public Location getPastPast() {
+		return pastPast;
+	}
+
+	public void setPast(Location past) {
+		this.past = past;
+	}
+
+	public void setPastPast(Location pastPast) {
+		this.pastPast = pastPast;
+	}
+	
+	
 
 	
 }

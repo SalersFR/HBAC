@@ -49,6 +49,9 @@ public class PacketListener implements Listener {
 						for (Check checks : jPlayer.getChecks()) {
 							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.FLYING), jPlayer);
 						}
+						jPlayer.pastPositions.add(event.getPlayer().getLocation());
+						
+					
 					}
 				});
 		ProtocolLibrary.getProtocolManager()
@@ -58,6 +61,7 @@ public class PacketListener implements Listener {
 							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.POSITION), jPlayer);
 						}
 					}
+						
 				});
 		ProtocolLibrary.getProtocolManager()
 				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.BLOCK_DIG) {
@@ -115,5 +119,6 @@ public class PacketListener implements Listener {
 		JPlayer jPlayer = Juaga.getInstance().getPlayerManager().getJPlayer(event.getPlayer());
 		Juaga.getInstance().getPlayerManager().jPlayers.remove(event.getPlayer().getUniqueId(), jPlayer);
 	}
+	
 
 }

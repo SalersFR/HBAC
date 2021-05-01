@@ -9,6 +9,9 @@ import gg.salers.juaga.jplayer.JPlayer;
 
 public class BukkitEvents implements Listener {
 	
+	
+	
+
 	@EventHandler
 	public void onMove(PlayerMoveEvent event) {
 		JPlayer jPlayer = Juaga.getInstance().getPlayerManager().getJPlayer(event.getPlayer());
@@ -17,5 +20,6 @@ public class BukkitEvents implements Listener {
 		jPlayer.setDeltaY(event.getTo().getY() - event.getFrom().getY());
 		jPlayer.setLastDeltaY(jPlayer.getDeltaY());
 	}
+
 
 }
