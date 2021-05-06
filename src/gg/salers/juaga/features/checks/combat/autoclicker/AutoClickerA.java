@@ -3,8 +3,6 @@ package gg.salers.juaga.features.checks.combat.autoclicker;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.Bukkit;
-
 import gg.salers.juaga.features.checks.Check;
 import gg.salers.juaga.jplayer.JPlayer;
 import gg.salers.juaga.packets.JPacket;
@@ -15,14 +13,14 @@ public class AutoClickerA extends Check {
 	
 
 	
-	//idea from joshi, improved a bit by me
+	//idea from joshi, improved a lot by me
 
 	private int ticks;
 	private List<Double> pastClicks = new ArrayList<>();
 	private float threshold;
 	
 	public AutoClickerA() {
-		super("AutoClicker (A)");
+		super("AutoClicker ","A");
 	}
 
 	@Override

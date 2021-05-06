@@ -19,7 +19,7 @@ public class Juaga extends JavaPlugin {
 	}
 	@Override
 	public void onDisable() {
-		
+		INSTANCE = null;
 	
 	}
 	public static Juaga getInstance() {

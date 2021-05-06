@@ -1,6 +1,5 @@
 package gg.salers.juaga.features.checks.move.fly;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.util.Vector;
 
@@ -12,7 +11,7 @@ import gg.salers.juaga.packets.PacketType;
 public class FlyB extends Check {
 
 	public FlyB() {
-		super("Fly (B)");
+		super("Fly"," B");
 	}
 
 	@Override
@@ -27,12 +26,12 @@ public class FlyB extends Check {
 				Vector vector = new Vector(jplayer.getTo().getX(), jplayer.getTo().getY(), jplayer.getTo().getZ());
 
 				double distance = vector.distance(
-						new Vector(jplayer.getFrom().getX(), jplayer.getFrom().getY(), jplayer.getFrom().getZ())); //for patching falses while falling from very high
-				if ((jplayer.getTo().getY() - jplayer.getFrom().getY()) > 0.1)
+						new Vector(jplayer.getFrom().getX(), jplayer.getFrom().getY(), jplayer.getFrom().getZ())); 
+				if ((jplayer.getTo().getY() - jplayer.getFrom().getY()) > 0.1) //for patching falses while falling from very high
 					return;
 				
 				
-				if(jplayer.getTo().add(0,-3,0).getBlock().getType() != Material.AIR) return;
+				if(jplayer.getTo().add(0,-3,0).getBlock().getType() != Material.AIR || jplayer.getPlayer().getFallDistance() != 0) return;
 
 				
 				if (!jplayer.getPlayer().isSprinting()) {

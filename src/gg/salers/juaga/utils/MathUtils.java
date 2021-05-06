@@ -2,6 +2,8 @@ package gg.salers.juaga.utils;
 
 import java.util.Collection;
 
+import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class MathUtils {
@@ -15,6 +17,8 @@ public class MathUtils {
 	// credits to Tecnio for the method above
 
 	public static double getHorizontalDistanceToHitBox(Vector from, Vector to) {
+		to.setY(0);
+		from.setY(0);
 		double nearestX = clamp(from.getX(), to.getX() - 0.4, to.getX() + 0.4);
 		double nearestZ = clamp(from.getZ(), to.getZ() - 0.4, to.getZ() + 0.4);
 
@@ -62,6 +66,12 @@ public class MathUtils {
 	    }
 	    
 	    //from Gatean
-	
+	    
+	   
+	    public static Location getEyeLocation(Player player) {
+	        Location eye = player.getLocation();
+	        eye.setY(eye.getY() + player.getEyeHeight());
+	        return eye;
+	    }
 
 }

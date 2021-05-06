@@ -3,27 +3,29 @@ package gg.salers.juaga.features.checks.combat.killaura;
 import gg.salers.juaga.features.checks.Check;
 import gg.salers.juaga.jplayer.JPlayer;
 import gg.salers.juaga.packets.JPacket;
+import gg.salers.juaga.packets.JPacketUseAction;
 import gg.salers.juaga.packets.PacketType;
 
-public class KillAuraA extends Check {
-
-	private long lastFlying;
+public class KillAuraB extends Check {
 	
-	public KillAuraA() {
-		super("KillAura ","A");
+	private int hits;
+
+	 public KillAuraB() {
+		super("KillAura","B");
 	}
 	@Override
 	public void handle(JPacket jPacket, JPlayer jplayer) {
-		if(jPacket.getType() == PacketType.FLYING) {
-			lastFlying = System.currentTimeMillis();
+		if(jPacket.getType() == PacketType.ARM_ANIMATION) {
+			hits = 0;
 		}else if(jPacket.getType() == PacketType.USE_ENTITY) {
-			long deltaFlying = System.currentTimeMillis() - lastFlying;
-			if(jplayer.getPing() < 150) {
-				if(deltaFlying < 25) {
+			if(jplayer.getAction() == JPacketUseAction.ATTACK) {
+				hits++;
+				if(hits > 2) {
 					fail(jplayer);
 				}
 			}
 		}
+		
 	}
 
 }

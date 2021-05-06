@@ -28,9 +28,6 @@ public class PacketListener implements Listener {
 				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.USE_ENTITY) {
 					@Override
 					public void onPacketReceiving(PacketEvent event) {
-						for (Check checks : jPlayer.getChecks()) {
-							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.USE_ENTITY), jPlayer);
-						}
 						Entity attacked = event.getPacket().getEntityModifier(jPlayer.getPlayer().getWorld()).read(0);
 						jPlayer.setAttacked(attacked);
 						if (event.getPacket().getEntityUseActions().read(0) == EntityUseAction.ATTACK) {
@@ -38,6 +35,10 @@ public class PacketListener implements Listener {
 						} else if (event.getPacket().getEntityUseActions().read(0) == EntityUseAction.INTERACT) {
 							jPlayer.setAction(JPacketUseAction.INTERACT);
 						}
+						for (Check checks : jPlayer.getChecks()) {
+							checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.USE_ENTITY), jPlayer);
+						}
+						
 					}
 
 				});
@@ -63,6 +64,24 @@ public class PacketListener implements Listener {
 					}
 						
 				});
+		ProtocolLibrary.getProtocolManager()
+		.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.POSITION_LOOK) {
+			public void onPacketReceiving(PacketEvent event) {
+				for (Check checks : jPlayer.getChecks()) {
+					checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.POSITION_LOOK), jPlayer);
+				}
+			}
+				
+		});
+		ProtocolLibrary.getProtocolManager()
+		.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.LOOK) {
+			public void onPacketReceiving(PacketEvent event) {
+				for (Check checks : jPlayer.getChecks()) {
+					checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.LOOK), jPlayer);
+				}
+			}
+				
+		});
 		ProtocolLibrary.getProtocolManager()
 				.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.BLOCK_DIG) {
 					public void onPacketReceiving(PacketEvent event) {
@@ -91,12 +110,31 @@ public class PacketListener implements Listener {
 		.addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Client.KEEP_ALIVE, PacketType.Play.Server.KEEP_ALIVE) {
 			public void onPacketReceiving(PacketEvent event) {
 				jPlayer.setPing((double) System.currentTimeMillis() - jPlayer.getLastKeepAlive());
+				for(Check checks : jPlayer.getChecks()) {
+					checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.KEEP_ALIVE), jPlayer);
+				}
 			
 			}
 			 @Override
 			public void onPacketSending(PacketEvent event) {
 				jPlayer.setLastKeepAlive(System.currentTimeMillis());
 			}
+		});
+		ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Server.TRANSACTION) {
+			 @Override
+				public void onPacketSending(PacketEvent event) {
+					for(Check checks : jPlayer.getChecks()) {
+						checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.TRANSACATION), jPlayer);
+					}
+			 }
+		});
+		ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(Juaga.getInstance(), PacketType.Play.Server.REL_ENTITY_MOVE) {
+			 @Override
+				public void onPacketSending(PacketEvent event) {
+					for(Check checks : jPlayer.getChecks()) {
+						checks.handle(new JPacket(gg.salers.juaga.packets.PacketType.REL_MOVE), jPlayer);
+					}
+			 }
 		});
 	}
 
@@ -108,6 +146,7 @@ public class PacketListener implements Listener {
 
 		initPackets(event.getPlayer());
 		for (Class<? extends Check> clazz : Check.INSTANCE.checks) {
+			@SuppressWarnings("deprecation")
 			Check instance = clazz.newInstance();
 			jPlayer.getChecks().add(instance);
 
