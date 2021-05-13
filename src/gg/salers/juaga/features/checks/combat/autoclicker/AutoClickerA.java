@@ -35,7 +35,7 @@ public class AutoClickerA extends Check {
 				
 				if(deviation < 4.75) {
 				if(++threshold > 5) {
-					fail(jplayer);
+					fail(jplayer,"deviation=" + deviation);
 				}
 					
 				}

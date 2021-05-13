@@ -21,7 +21,19 @@ public class JPlayer {
 	private JPacketUseAction action;
 	private Entity attacked;
 	private double lastDeltaY, deltaY,ping;
+	private boolean hasToLagBack = false;
 	public List<Location> pastPositions = new LinkedList<>();
+	private long lastLagBack;
+	
+	
+	public boolean isHasToLagBack() {
+		return hasToLagBack;
+	}
+
+	public void setHasToLagBack(boolean hasToLagBack) {
+		this.hasToLagBack = hasToLagBack;
+	}
+
 	public double getPing() {
 		return ping;
 	}
@@ -127,6 +139,16 @@ public class JPlayer {
 	public void setPastPast(Location pastPast) {
 		this.pastPast = pastPast;
 	}
+
+	public long getLastLagBack() {
+		return lastLagBack;
+	}
+
+	public void setLastLagBack(long lastLagBack) {
+		this.lastLagBack = lastLagBack;
+	}
+	
+	
 	
 	
 

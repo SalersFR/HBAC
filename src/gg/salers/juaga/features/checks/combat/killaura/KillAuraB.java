@@ -21,7 +21,7 @@ public class KillAuraB extends Check {
 			if(jplayer.getAction() == JPacketUseAction.ATTACK) {
 				hits++;
 				if(hits > 2) {
-					fail(jplayer);
+					fail(jplayer, "hits=" + hits);
 				}
 			}
 		}

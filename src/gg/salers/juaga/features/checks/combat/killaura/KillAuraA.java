@@ -20,7 +20,7 @@ public class KillAuraA extends Check {
 			long deltaFlying = System.currentTimeMillis() - lastFlying;
 			if(jplayer.getPing() < 150) {
 				if(deltaFlying < 25) {
-					fail(jplayer);
+					fail(jplayer , " deltaFlying=" + deltaFlying + " lastFlying=" + lastFlying);
 				}
 			}
 		}

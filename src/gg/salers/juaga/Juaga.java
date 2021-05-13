@@ -16,6 +16,7 @@ public class Juaga extends JavaPlugin {
 	public void onEnable() {
 		INSTANCE = this;
 		registerEvents();
+		saveDefaultConfig();
 	}
 	@Override
 	public void onDisable() {

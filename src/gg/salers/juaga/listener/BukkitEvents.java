@@ -19,6 +19,11 @@ public class BukkitEvents implements Listener {
 		jPlayer.setTo(event.getTo());
 		jPlayer.setDeltaY(event.getTo().getY() - event.getFrom().getY());
 		jPlayer.setLastDeltaY(jPlayer.getDeltaY());
+		if(jPlayer.isHasToLagBack()) {
+			event.setTo(event.getFrom());
+			jPlayer.setHasToLagBack(false);
+		}
+		
 	}
 
 

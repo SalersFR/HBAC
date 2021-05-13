@@ -20,7 +20,7 @@ public class AimAssistA  extends Check{
 			if(jplayer.getAction() == JPacketUseAction.ATTACK) {
 				this.pitch = jplayer.getTo().getPitch();
 				if(pitch == 0 && pastPitch < 0 && pastPastPitch == 0) { //a human can't do this
-					fail(jplayer);
+					fail(jplayer,"pitch=" + pitch + " pastPitch=" + pastPitch + " pastPastPitch=" + pastPastPitch);
 				}
 				this.pastPitch = pitch;
 				this.pastPastPitch = pastPitch;

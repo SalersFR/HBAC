@@ -11,13 +11,14 @@ public class JPacket {
 		return type;
 	}
 
-	public void setType(PacketType type, PacketContainer container) {
+	public void setType(PacketType type) {
 		this.type = type;
-		this.packetContainer = container;
+		
 	}
 
-	public JPacket(PacketType type) {
+	public JPacket(PacketType type, PacketContainer container) {
 		this.type = type;
+		this.packetContainer = container;
 	}
 
 	public PacketContainer getPacketContainer() {

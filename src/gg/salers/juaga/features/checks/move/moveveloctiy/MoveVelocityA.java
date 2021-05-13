@@ -32,7 +32,8 @@ public class MoveVelocityA extends Check {
 			double result = deltaXZ - motionXZ; //a kind of preditction
 			
 			if(result > 0.68) {
-				fail(jplayer);
+				lagBack(jplayer);
+				fail(jplayer ," motionXZ=" + motionXZ + " deltaXZ=" + deltaXZ + " result=" + result);
 				
 			}
 

@@ -16,7 +16,7 @@ public class BadPacketsB extends Check {
 		if(jPacket.getType() == PacketType.USE_ENTITY) {
 			if(jplayer.getAction() == JPacketUseAction.ATTACK) {
 				if(jplayer.getAttacked() == jplayer.getPlayer()) {
-					fail(jplayer);
+					fail(jplayer,"");
 				}
 			}
 		}

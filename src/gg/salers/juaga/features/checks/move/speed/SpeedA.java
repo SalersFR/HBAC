@@ -26,15 +26,18 @@ public class SpeedA extends Check {
 			double deltaX = jplayer.getTo().getX() - jplayer.getFrom().getX();
 			double deltaZ = jplayer.getTo().getZ() - jplayer.getFrom().getZ();
 			deltaXZ = Math.hypot(deltaX, deltaZ);
+			double pastDeltaXZ = this.pastDeltaXZ;
+			this.pastDeltaXZ = deltaXZ;
 			double acceleration = deltaXZ - pastDeltaXZ;
 
 			if (acceleration > 0.65) {
-				fail(jplayer);
+				fail(jplayer ," deltaXZ=" + deltaXZ + " pastDeltaXZ=" + pastDeltaXZ + " acceleration=" + acceleration);
+				lagBack(jplayer);
 
 			}
 
 		}
-		this.deltaXZ = pastDeltaXZ;
+		
 	}
 
 }

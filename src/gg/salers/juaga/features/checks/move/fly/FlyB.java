@@ -37,14 +37,16 @@ public class FlyB extends Check {
 				if (!jplayer.getPlayer().isSprinting()) {
 
 					if (distance > 1.23 && distance < 7) {
-						fail(jplayer);
+						lagBack(jplayer);
+						fail(jplayer,"distance=" + distance + " sprinting=" + jplayer.getPlayer().isSprinting());
 
 					}
 
 				} else {
 
 					if (distance > 1.6 && distance < 7) {
-						fail(jplayer);
+						lagBack(jplayer);
+						fail(jplayer,"distance=" + distance + " sprinting=" + jplayer.getPlayer().isSprinting());
 
 					}
 				}

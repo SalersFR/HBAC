@@ -52,7 +52,7 @@ public class ReachA extends Check {
 
 					if (distance > 3.05f) {
 						if (++threshold > 7.5) {
-							fail(jplayer);
+							fail(jplayer , " distance=" + distance + " threshold=" + threshold);
 
 						}
 					} else

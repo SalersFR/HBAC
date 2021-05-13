@@ -7,9 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 public class MathUtils {
-	
-	/** Fields for some methods **/
-
 
 	public static int msToTicks(final double time) {
 		return (int) Math.round(time / 50.0);
@@ -31,47 +28,51 @@ public class MathUtils {
 	public static double clamp(double val, double min, double max) {
 		return Math.max(min, Math.min(max, val));
 	}
-	//credits to Rowin
-	
-	
-	 public static double getDeviation(final Collection<? extends Number> data) {
-	        final double variance = getVariance(data);
+	// credits to Rowin
 
-	        // The standard deviation is the square root of variance. (sqrt(s^2))
-	        return Math.sqrt(variance);
-	    }
+	public static double getDeviation(final Collection<? extends Number> data) {
+		final double variance = getVariance(data);
 
-	    public static double getVariance(final Collection<? extends Number> data) {
-	        int count = 0;
+		// The standard deviation is the square root of variance. (sqrt(s^2))
+		return Math.sqrt(variance);
+	}
 
-	        double sum = 0.0;
-	        double variance = 0.0;
+	public static double getVariance(final Collection<? extends Number> data) {
+		int count = 0;
 
-	        final double average;
+		double sum = 0.0;
+		double variance = 0.0;
 
-	        // Increase the sum and the count to find the average and the standard deviation
-	        for (final Number number : data) {
-	            sum += number.doubleValue();
-	            ++count;
-	        }
+		final double average;
 
-	        average = sum / count;
+		// Increase the sum and the count to find the average and the standard deviation
+		for (final Number number : data) {
+			sum += number.doubleValue();
+			++count;
+		}
 
-	        // Run the standard deviation formula
-	        for (final Number number : data) {
-	            variance += Math.pow(number.doubleValue() - average, 2.0);
-	        }
+		average = sum / count;
 
-	        return variance;
-	    }
-	    
-	    //from Gatean
-	    
-	   
-	    public static Location getEyeLocation(Player player) {
-	        Location eye = player.getLocation();
-	        eye.setY(eye.getY() + player.getEyeHeight());
-	        return eye;
-	    }
+		// Run the standard deviation formula
+		for (final Number number : data) {
+			variance += Math.pow(number.doubleValue() - average, 2.0);
+		}
+
+		return variance;
+	}
+
+	// from Gatean
+
+	public static Location getEyeLocation(Player player) {
+		Location eye = player.getLocation();
+		eye.setY(eye.getY() + player.getEyeHeight());
+		return eye;
+	}
+
+	public static double getAngle(Player player, Location target) {
+		Location eye = player.getEyeLocation();
+		Vector toEntity = target.toVector().subtract(eye.toVector());
+		return toEntity.normalize().dot(eye.getDirection());
+	}
 
 }

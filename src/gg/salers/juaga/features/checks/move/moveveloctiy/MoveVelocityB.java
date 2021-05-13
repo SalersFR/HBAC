@@ -18,8 +18,10 @@ public class MoveVelocityB extends Check {
 
 	@Override
 	public void handle(JPacket jPacket, JPlayer jplayer) {
-		if(jplayer.getTo() == null || jplayer.getFrom() == null) return;
-		if( jplayer.getPlayer().getFallDistance() != 0) return;
+		if (jplayer.getTo() == null || jplayer.getFrom() == null)
+			return;
+		if (jplayer.getPlayer().getFallDistance() != 0)
+			return;
 		if (jPacket.getType() == PacketType.POSITION) {
 			isOnGround = jplayer.getPlayer().isOnGround();
 			if (wasOnGround && isOnGround) {
@@ -29,24 +31,28 @@ public class MoveVelocityB extends Check {
 						|| jplayer.getTo().add(0, 1, 0).getBlock().isLiquid()
 						|| jplayer.getTo().add(0, 0, 0).getBlock().isLiquid()
 						|| jplayer.getPlayer().getLocation().getBlock().isLiquid()
-					    || jplayer.getTo().add(0,-0.1699,0).getBlock().getType() == Material.AIR
-					    || jplayer.getFrom().add(0,-0.1699,0).getBlock().getType() == Material.AIR)
+						|| jplayer.getTo().add(0, -0.1699, 0).getBlock().getType() == Material.AIR
+						|| jplayer.getFrom().add(0, -0.1699, 0).getBlock().getType() == Material.AIR)
 					return;
-				if (motionY != -0.0784000015258789) { //motionY should be -0.0784000015258789
-					fail(jplayer);
+				if (motionY != -0.0784000015258789) { // motionY should be -0.0784000015258789
+					setType("B");
+					lagBack(jplayer);
+					fail(jplayer,  " motionY=" + motionY + " wasOnGround=" + wasOnGround + " isOnGround=" + isOnGround );
 				}
 			} else {
 				double motionY = jplayer.getPlayer().getVelocity().getY();
 				if (jplayer.getTo().add(-0, -0.1, 0).getBlock().isLiquid()
 						|| jplayer.getTo().add(0, 1, 0).getBlock().isLiquid()
 						|| jplayer.getTo().add(0, 0, 0).getBlock().isLiquid()
-						|| jplayer.getPlayer().getLocation().getBlock().isLiquid()
-					    && jplayer.getPlayer().getLocation().add(0,-0.11,0).getBlock().getType() == Material.AIR)
+						|| jplayer.getPlayer().getLocation().getBlock().isLiquid() && jplayer.getPlayer().getLocation()
+								.add(0, -0.11, 0).getBlock().getType() == Material.AIR)
 					return;
-				if (!LocationUtils.isCloseToGround(jplayer.getFrom())
-						&& !LocationUtils.isCloseToGround(jplayer.getTo())) {
-					if (motionY == -0.0784000015258789) { //motionY should not be  -0.0784000015258789
-						fail(jplayer);
+				if (!LocationUtils.isCloseToGround(jplayer.getFrom()) && !LocationUtils.isCloseToGround(jplayer.getTo())
+						&& jplayer.getPlayer().getLocation().clone().add(0, -0.99, 0).getBlock()
+								.getType() == Material.AIR) {
+					if (motionY == -0.0784000015258789) { // motionY should not be -0.0784000015258789
+						setType("B2");
+						//(jplayer);
 					}
 				}
 				this.wasOnGround = isOnGround;
