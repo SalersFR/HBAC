@@ -15,7 +15,7 @@ public class BadPacketsA extends Check {
 		if (jplayer.getFrom() == null || jplayer.getFrom() == null)
 			return;
 		if(jPacket.getType() == PacketType.FLYING) {
-			float pitch = Math.abs(jplayer.getTo().getPitch());
+			float pitch = jplayer.getTo().getPitch();
 			if(pitch > 90F || pitch < -90F) {
 				lagBack(jplayer);
 				fail(jplayer , " pitch=" + (Math.abs(jplayer.getTo().getPitch())));
