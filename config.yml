@@ -1,8 +1,0 @@
-juaga:
-  #Placeholders : 
-  #%player% = the cheater
-  #%cheat% = the cheat (example: Fly)
-  #%type% = the cheat key (example: A)
-  
-  punishement-command: "kick %player% %cheat% %type%"
-  
