@@ -14,6 +14,7 @@ import java.time.LocalDate;
 public class SpeedB extends Check {
     // TODO: exempt on teleport & velocity because those aren't handled
     
+    private float lastFriction = 0, friction = 0;
     private double lastDeltaXZ;
     private boolean wasOnGround;
     private int ground = 0, air = 0;
@@ -55,10 +56,21 @@ public class SpeedB extends Check {
             } else {
                 prediction = lastDeltaXZ * 0.91f + 0.026f;
             }
-            if (expect < playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1))
-                expect = playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1);
+            if (prediction < playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1))
+                prediction = playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1);
+            
+            // very lazy patch for a false flag
+            if (ground > 1) {
+                this.lastFriction = this.friction;
+                this.friction = getBlockFriction(playerData) * 0.91f;
+            }
+
+            if (friction < lastFriction)
+                prediction += user.getLandMovementFactor(speed) * 1.25;
+            
+            // flag
             if (deltaXZ > prediction) {
-                flag(playerData,"p=" + prediction + " d=" + deltaXZ);
+                flag(playerData, "p=" + prediction + " d=" + deltaXZ);
             }
         }
     }
