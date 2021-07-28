@@ -66,7 +66,7 @@ public class SpeedB extends Check {
             }
 
             if (friction < lastFriction)
-                prediction += user.getLandMovementFactor(speed) * 1.25;
+                prediction += landMovementFactor 1.25;
             
             // flag
             if (deltaXZ > prediction) {
