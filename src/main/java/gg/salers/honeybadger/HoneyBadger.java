@@ -1,6 +1,5 @@
 package gg.salers.honeybadger;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import gg.salers.honeybadger.check.CheckManager;
 import gg.salers.honeybadger.data.PlayerDataManager;
 import gg.salers.honeybadger.listener.BukkitListener;
@@ -51,7 +50,7 @@ public class HoneyBadger extends JavaPlugin {
      **/
 
     private void loadEvents() {
-        Bukkit.getPluginManager().registerEvents(new BukkitListener(),this);
+        Bukkit.getPluginManager().registerEvents(new BukkitListener(), this);
         new PacketListener();
     }
 }

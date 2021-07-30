@@ -24,10 +24,12 @@ public class CheckManager {
     @Getter
     private static final CheckManager instance = new CheckManager();
 
-    /** all the checks classes **/
+    /**
+     * all the checks classes
+     **/
     public final List<Class<? extends Check>> checksClasses = Arrays.asList(FlightA.class, FlightB.class,
-            SpeedA.class, SpeedB.class, KillAuraA.class, GroundA.class
-            , KillAuraB.class , ReachA.class, AutoclickerA.class, AimA.class, JumpA.class, ProtocolA.class, ProtocolB.class);
+            SpeedA.class, SpeedB.class, KillAuraA.class, GroundA.class, KillAuraB.class, ReachA.class,
+            AutoclickerA.class, AimA.class, JumpA.class, ProtocolA.class, ProtocolB.class);
 
     /**
      * Apply checks to PlayerData
@@ -37,12 +39,9 @@ public class CheckManager {
      * @throws InstantiationException
      */
     public void initChecks(PlayerData data) throws IllegalAccessException, InstantiationException {
-        for(Class<? extends Check> clazz : checksClasses) {
+        for (Class<? extends Check> clazz : checksClasses) {
             Check check = clazz.newInstance();
             data.getChecks().add(check);
         }
-
     }
-
-
 }

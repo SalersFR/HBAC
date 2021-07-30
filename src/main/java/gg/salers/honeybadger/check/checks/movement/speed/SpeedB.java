@@ -5,10 +5,8 @@ import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
-import gg.salers.honeybadger.utils.LocationUtils;
-import org.bukkit.Material;
-
-import java.time.LocalDate;
+import gg.salers.honeybadger.utils.PlayerUtils;
+import org.bukkit.potion.PotionEffectType;
 
 @CheckData(name = "Speed (B)", experimental = true)
 public class SpeedB extends Check {
@@ -41,8 +39,10 @@ public class SpeedB extends Check {
             double d = 0.10000000149011612;
             d += d * 0.20000000298023224 * speed;
             d += d * -0.15000000596046448 * slow;
-            if (sprinting)
-                d += d * 0.30000001192092896;
+
+            // Sprint desync big gay just assume they are sprinting
+            d += d * 0.30000001192092896;
+
             float landMovementFactor = (float) d;
             
             // the check itself
@@ -66,7 +66,7 @@ public class SpeedB extends Check {
             }
 
             if (friction < lastFriction)
-                prediction += landMovementFactor 1.25;
+                prediction += landMovementFactor * 1.25;
             
             // flag
             if (deltaXZ > prediction) {

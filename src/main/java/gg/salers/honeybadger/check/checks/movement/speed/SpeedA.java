@@ -6,7 +6,7 @@ import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
 
-@CheckData(name = "Speed (A)",experimental = true)
+@CheckData(name = "Speed (A)", experimental = true)
 public class SpeedA extends Check {
 
     private double lastDeltaXZ;
@@ -15,26 +15,26 @@ public class SpeedA extends Check {
 
     @Override
     public void onPacket(PacketEvent event, PlayerData playerData) {
-        if(event.getPacketType() == PacketType.Play.Client.POSITION || event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
-            double lastDeltaXZ = this.lastDeltaXZ;
-            this.lastDeltaXZ = playerData.getMovementProcessor().getDeltaXZ();
+        if (event.getPacketType() == PacketType.Play.Client.POSITION
+                || event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
             boolean isOnGround = playerData.getBukkitPlayerFromUUID().isOnGround();
             boolean wasOnGround = this.wasOnGround;
-            this.wasOnGround = isOnGround;
+
             double predictedDeltaXZ = lastDeltaXZ * 0.91F;
             double result = (playerData.getMovementProcessor().getDeltaXZ() - predictedDeltaXZ) * 100;
-            if(!wasOnGround && !isOnGround) {
-                if(result >= 2.61D) {
-                    if(++threshold > 5) {
+
+            if (!wasOnGround && !isOnGround) {
+                if (result >= 2.61D) {
+                    if (++threshold > 5) {
                         setProbabilty((int) result);
-                        flag(playerData,"r=" + result);
+                        flag(playerData, "r=" + result);
 
                     }
-                }else threshold -= threshold > 0 ? 1 : 0;
-
-
+                } else threshold -= threshold > 0 ? 1 : 0;
             }
-        }
 
+            this.lastDeltaXZ = playerData.getMovementProcessor().getDeltaXZ();
+            this.wasOnGround = isOnGround;
+        }
     }
 }

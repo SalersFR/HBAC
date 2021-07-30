@@ -11,15 +11,15 @@ public class GroundA extends Check {
 
     @Override
     public void onPacket(PacketEvent event, PlayerData playerData) {
-        if (event.getPacketType() == PacketType.Play.Client.POSITION ||
-                event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
-            if(playerData.getMovementProcessor().getAirTicks() > 15 && !playerData.getMovementProcessor().
-                    isAtTheEdgeOfABlock() && !playerData.getMovementProcessor().isOnClimbable() && !playerData.
-                    getMovementProcessor().isNearBoat() && playerData.getBukkitPlayerFromUUID().isOnGround())  {
-                flag(playerData,"aT=" + playerData.getMovementProcessor().getAirTicks());
+        if (event.getPacketType() == PacketType.Play.Client.POSITION
+                || event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
+            if (playerData.getMovementProcessor().getAirTicks() > 15
+                    && !playerData.getMovementProcessor().isAtTheEdgeOfABlock()
+                    && !playerData.getMovementProcessor().isOnClimbable()
+                    && !playerData.getMovementProcessor().isNearBoat()
+                    && playerData.getBukkitPlayerFromUUID().isOnGround()) {
+                flag(playerData, "aT=" + playerData.getMovementProcessor().getAirTicks());
             }
-
         }
-
     }
 }
