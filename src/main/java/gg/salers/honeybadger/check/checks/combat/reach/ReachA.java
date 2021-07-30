@@ -6,8 +6,10 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.CombatProcessor;
 import gg.salers.honeybadger.utils.Cuboid;
 import gg.salers.honeybadger.utils.PlayerLocation;
+import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 @CheckData(name = "Reach (A)", experimental = false)
 public class ReachA extends Check {
 
-    private List<PlayerLocation> pastEntitiesLocations = new ArrayList<>();
+    private final List<PlayerLocation> pastEntitiesLocations = new ArrayList<>();
     private int threshold;
 
     /**
@@ -39,32 +41,38 @@ public class ReachA extends Check {
 
     @Override
     public void onPacket(PacketEvent event, PlayerData playerData) {
+        final CombatProcessor combatProcessor = playerData.getCombatProcessor();
+        
         if (event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
-            if (playerData.getCombatProcessor().getAction() == EnumWrappers.EntityUseAction.ATTACK) {
-                List<Cuboid> cuboidList = getPastEntitiesLocationsInRange(playerData.getNetworkProcessor()
-                        .getKpPing()).stream().map(PlayerLocation::hitbox).collect(Collectors.toList());
+            if (combatProcessor.getAction() == EnumWrappers.EntityUseAction.ATTACK) {
+                final int ping = playerData.getNetworkProcessor().getKpPing();
+
+                List<Cuboid> cuboidList = getPastEntitiesLocationsInRange(ping)
+                        .stream().map(PlayerLocation::hitbox).collect(Collectors.toList());
+
                 Vector attacker = playerData.getBukkitPlayerFromUUID().getLocation().toVector();
+
                 float distance = (float) cuboidList.stream().mapToDouble(cuboid ->
                         cuboid.distanceXZ(attacker.getX(), attacker.getZ()) - 0.1f).min().orElse(0);
+
                 if (distance > 3.1f) {
                     if (++threshold > 8) {
                         flag(playerData, "d=" + distance);
                     }
                 } else threshold -= threshold > 0 ? 1 : 0;
-
-
             }
         } else if (event.getPacketType() == PacketType.Play.Server.REL_ENTITY_MOVE) {
-            if (playerData.getCombatProcessor().getAttacked() != null) {
+            if (combatProcessor.getAttacked() != null) {
                 if (pastEntitiesLocations.size() > 19) {
                     pastEntitiesLocations.clear();
                 }
-                pastEntitiesLocations.add(new PlayerLocation(playerData.getCombatProcessor().getAttacked().getLocation()
-                        .getX(), playerData.getCombatProcessor().getAttacked().getLocation().getY(),
-                        playerData.getCombatProcessor().getAttacked().getLocation().getZ(),
-                        playerData.getCombatProcessor().getAttacked().getLocation().getYaw()
-                        , playerData.getCombatProcessor().getAttacked().getLocation().getPitch()));
-
+                
+                final Location location = playerData.getCombatProcessor().getAttacked().getLocation();
+                
+                pastEntitiesLocations.add(new PlayerLocation(
+                        location.getX(), location.getY(), location.getZ(),
+                        location.getYaw(), location.getPitch())
+                );
             }
         }
 

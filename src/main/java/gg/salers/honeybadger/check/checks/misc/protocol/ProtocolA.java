@@ -11,13 +11,13 @@ public class ProtocolA extends Check {
 
     @Override
     public void onPacket(PacketEvent event, PlayerData playerData) {
-        if(event.getPacketType() == PacketType.Play.Client.POSITION_LOOK
+        if (event.getPacketType() == PacketType.Play.Client.POSITION_LOOK
                 || event.getPacketType() == PacketType.Play.Client.LOOK) {
-            if(Math.abs(event.getPlayer().getLocation().getPitch()) > 90f) {
+            final float pitch = Math.abs(event.getPlayer().getLocation().getPitch());
+
+            if (pitch > 90f) {
                 punish(playerData);
             }
-
         }
-
     }
 }

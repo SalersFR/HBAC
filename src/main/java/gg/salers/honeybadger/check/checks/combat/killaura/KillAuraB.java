@@ -14,15 +14,14 @@ public class KillAuraB extends Check {
 
     @Override
     public void onPacket(PacketEvent event, PlayerData playerData) {
-        if(event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
-            if(playerData.getCombatProcessor().getAction() == EnumWrappers.EntityUseAction.ATTACK) {
-                hits++;
-                if(hits > 4) {
+        if (event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
+            if (playerData.getCombatProcessor().getAction() == EnumWrappers.EntityUseAction.ATTACK) {
+                if (++hits > 4) {
                     setProbabilty(1);
-                    flag(playerData,"h=" + hits);
+                    flag(playerData, "h=" + hits);
                 }
             }
-        }else if(event.getPacketType() == PacketType.Play.Client.ARM_ANIMATION) {
+        } else if (event.getPacketType() == PacketType.Play.Client.ARM_ANIMATION) {
             hits = 0;
         }
     }
