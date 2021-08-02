@@ -5,6 +5,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
+import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.processor.CombatProcessor;
 import gg.salers.honeybadger.utils.Cuboid;
@@ -40,11 +41,10 @@ public class ReachA extends Check {
     }
 
     @Override
-    public void onPacket(PacketEvent event, PlayerData playerData) {
+    public void onPacket(Packet packet, PlayerData playerData) {
         final CombatProcessor combatProcessor = playerData.getCombatProcessor();
         
-        if (event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
-            if (combatProcessor.getAction() == EnumWrappers.EntityUseAction.ATTACK) {
+       if(packet.isAttack()) {
                 final int ping = playerData.getNetworkProcessor().getKpPing();
 
                 List<Cuboid> cuboidList = getPastEntitiesLocationsInRange(ping)
@@ -60,21 +60,25 @@ public class ReachA extends Check {
                         flag(playerData, "d=" + distance);
                     }
                 } else threshold -= threshold > 0 ? 1 : 0;
-            }
-        } else if (event.getPacketType() == PacketType.Play.Server.REL_ENTITY_MOVE) {
-            if (combatProcessor.getAttacked() != null) {
-                if (pastEntitiesLocations.size() > 19) {
-                    pastEntitiesLocations.clear();
-                }
-                
-                final Location location = playerData.getCombatProcessor().getAttacked().getLocation();
-                
-                pastEntitiesLocations.add(new PlayerLocation(
-                        location.getX(), location.getY(), location.getZ(),
-                        location.getYaw(), location.getPitch())
-                );
-            }
-        }
+            }else if (packet.isRelEntityMove()) {
 
+
+           if (combatProcessor.getAttacked() != null) {
+               if (pastEntitiesLocations.size() > 19) {
+                   pastEntitiesLocations.clear();
+               }
+
+               final Location location = playerData.getCombatProcessor().getAttacked().getLocation();
+
+               pastEntitiesLocations.add(new PlayerLocation(
+                       location.getX(), location.getY(), location.getZ(),
+                       location.getYaw(), location.getPitch())
+               );
+           }
+       }
     }
 }
+
+
+
+

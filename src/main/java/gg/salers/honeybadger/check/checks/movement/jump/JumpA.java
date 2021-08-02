@@ -4,6 +4,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
+import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.PlayerUtils;
 import org.bukkit.potion.PotionEffectType;
@@ -13,9 +14,8 @@ public class JumpA extends Check {
 
 
     @Override
-    public void onPacket(PacketEvent event, PlayerData playerData) {
-        if (event.getPacketType() == PacketType.Play.Client.POSITION
-                || event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
+    public void onPacket(Packet packet, PlayerData playerData) {
+        if (packet.isFlying()) {
             double limit = 0.42F; //maximum height of jumping
             limit += PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.JUMP) * 0.1F;
 

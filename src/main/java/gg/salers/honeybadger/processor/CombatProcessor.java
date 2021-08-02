@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import gg.salers.honeybadger.HoneyBadger;
+import gg.salers.honeybadger.data.PlayerData;
 import lombok.Data;
 import org.bukkit.entity.LivingEntity;
 
@@ -17,26 +18,23 @@ public class CombatProcessor {
     private long lastAttack;
 
     private boolean attacking;
-    public CombatProcessor() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(HoneyBadger.getInstance(),
-                PacketType.Play.Client.USE_ENTITY) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                action = event.getPacket().getEntityUseActions().read(0);
-                attacked = (LivingEntity)
-                        event.getPacket().getEntityModifier(event.getPlayer().getWorld()).read(0);
-                setLastAttacked(attacked);
-                lastAttack = System.currentTimeMillis();
-                attacking = true;
-            }
-        });
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(HoneyBadger.getInstance(),
-                PacketType.Play.Client.KEEP_ALIVE) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                attacking = false;
-            }
-        });
+    private PlayerData data;
+    public CombatProcessor(PlayerData data) {
+      this.data = data;
+    }
 
+    public void handleReceive(PacketEvent event) {
+        if(event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
+            action = event.getPacket().getEntityUseActions().read(0);
+            attacked = (LivingEntity)
+                    event.getPacket().getEntityModifier(event.getPlayer().getWorld()).read(0);
+            setLastAttacked(attacked);
+            lastAttack = System.currentTimeMillis();
+            attacking = true;
+        }
+    }
+
+    public void handleSend(PacketEvent event) {
+        attacking = false;
     }
 }

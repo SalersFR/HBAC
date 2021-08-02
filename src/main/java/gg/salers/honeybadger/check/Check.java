@@ -30,10 +30,10 @@ public abstract class Check {
      * Method for doing checks
      *
      * @param playerData the data reliated to the check
-     * @param event      the packet event from ProtocolLib
+     * @param packet     the custom packet from packetcontainer
      **/
 
-    public abstract void onPacket(PacketEvent event, PlayerData playerData) throws IOException;
+    public abstract void onPacket(Packet packet, PlayerData playerData) throws IOException;
 
     /**
      * Get the @CheckData in a check class
@@ -104,7 +104,6 @@ public abstract class Check {
 
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("hbac.alerts")) {
-                if (++delay > 5) {
                     vl++;
                     if (this.experimental) {
                         onlinePlayers.spigot().sendMessage(toSendExp);
@@ -115,7 +114,7 @@ public abstract class Check {
                     }
                     delay = 0;
                 }
-            }
+
         }
     }
 

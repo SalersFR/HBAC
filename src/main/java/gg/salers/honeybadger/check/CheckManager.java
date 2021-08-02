@@ -7,7 +7,7 @@ import gg.salers.honeybadger.check.checks.combat.killaura.KillAuraB;
 import gg.salers.honeybadger.check.checks.combat.reach.ReachA;
 import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolA;
 import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolB;
-import gg.salers.honeybadger.check.checks.misc.protocol.ground.GroundA;
+import gg.salers.honeybadger.check.checks.misc.ground.GroundA;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightA;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightB;
 import gg.salers.honeybadger.check.checks.movement.jump.JumpA;

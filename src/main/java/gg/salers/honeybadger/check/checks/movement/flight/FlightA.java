@@ -4,6 +4,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
+import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.processor.MovementProcessor;
 
@@ -14,8 +15,8 @@ public class FlightA extends Check {
     private int threshold;
 
     @Override
-    public void onPacket(PacketEvent event, PlayerData playerData) {
-        if (event.getPacketType() == PacketType.Play.Client.POSITION || event.getPacketType() == PacketType.Play.Client.POSITION_LOOK) {
+    public void onPacket(Packet packet, PlayerData playerData) {
+        if (packet.isFlying()) {
 
             double lastDeltaY = this.lastDeltaY;
             double accelY = Math.abs(playerData.getMovementProcessor().getDeltaY() - lastDeltaY);

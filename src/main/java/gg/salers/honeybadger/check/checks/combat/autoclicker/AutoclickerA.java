@@ -4,6 +4,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
+import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.MathUtils;
 
@@ -18,8 +19,8 @@ public class AutoclickerA extends Check {
     private final List<Integer> pastTicksDelay = new ArrayList<>();
 
     @Override
-    public void onPacket(PacketEvent event, PlayerData playerData) {
-        if (event.getPacketType() == PacketType.Play.Client.ARM_ANIMATION) {
+    public void onPacket(Packet packet, PlayerData playerData) {
+        if (packet.isArmAnimation()) {
             if (!this.isDigging) {
                 pastTicksDelay.add(ticks);
                 double stdDeviation = MathUtils.getStandardDeviation(pastTicksDelay);
@@ -36,9 +37,9 @@ public class AutoclickerA extends Check {
                 }
                 ticks = 0;
             }
-        } else if (event.getPacketType() == PacketType.Play.Client.BLOCK_DIG) {
+        } else if (packet.isBlockDig()) {
             this.isDigging = true;
-        } else if (event.getPacketType() == PacketType.Play.Client.FLYING) {
+        } else if (packet.isFlying()) {
             this.isDigging = false;
             ticks++;
         }

@@ -25,10 +25,10 @@ public class PlayerData {
     private List<Check> checks;
 
     public PlayerData(UUID uuid) {
-        this.movementProcessor = new MovementProcessor();
-        this.combatProcessor = new CombatProcessor();
-        this.networkProcessor = new NetworkProcessor();
-        this.rotationProcessor = new RotationProcessor();
+        this.movementProcessor = new MovementProcessor(this);
+        this.combatProcessor = new CombatProcessor(this);
+        this.networkProcessor = new NetworkProcessor(this);
+        this.rotationProcessor = new RotationProcessor(this);
         this.uuid = uuid;
         this.checks = new ArrayList<>();
     }
