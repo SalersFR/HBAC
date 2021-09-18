@@ -75,7 +75,7 @@ public class SpeedB extends Check {
             // flag
             if (deltaXZ > prediction && playerData.getMovementProcessor().getTicksSinceHurt() > 32) {
 
-                if (++buffer > 4) {
+                if (++buffer > 6) {
                     flag(playerData, "p=" + prediction + " d=" + deltaXZ);
                 }
             } else if(buffer > 0)buffer -= 0.5D;
