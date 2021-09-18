@@ -1,16 +1,12 @@
 package gg.salers.honeybadger.check.checks.movement.flight;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.HPacket;
 
-import java.io.IOException;
-
-@CheckData(name = "Flight (B)", experimental = true)
-public class FlightB extends Check {
+@CheckData(name = "Flight (C)", experimental = false)
+public class FlightC extends Check {
 
     private double lastDeltaY;
     private int threshold;
@@ -21,26 +17,23 @@ public class FlightB extends Check {
         if (packet.isMove()) {
             double lastDeltaY = this.lastDeltaY;
             this.lastDeltaY = playerData.getMovementProcessor().getDeltaY();
-            double predictedDeltaY = (lastDeltaY - 0.08) * 0.9800000190734863D;
-            double result = Math.abs(playerData.getMovementProcessor().getDeltaY() - predictedDeltaY);
             if (playerData.getMovementProcessor().isInLiquid()
                     || playerData.getMovementProcessor().isNearBoat()
                     || playerData.getMovementProcessor().isInWeb()
                     || playerData.getMovementProcessor().isOnClimbable()) return;
-            if(playerData.getMovementProcessor().getEdgeBlockTicks() > 5) return;
+            if (playerData.getMovementProcessor().getEdgeBlockTicks() > 5) return;
 
-            if(playerData.getMovementProcessor().getAirTicks() > 15) {
-
-                if(result > 0.01) {
+            if (playerData.getMovementProcessor().getAirTicks() > 15) {
+                if (playerData.getMovementProcessor().getDeltaY() > lastDeltaY) {
                     if (++threshold > 2) {
-                        setProbabilty((int) (result * 10));
-                        flag(playerData, "r=" + result);
+                        setProbabilty(1);
+                        flag(playerData, "dY=" + playerData.getMovementProcessor().getDeltaY() + " lDY=" + lastDeltaY);
                     }
-                }else threshold -= threshold > 0 ? 0.05 : 0;
+                } else threshold -= threshold > 0 ? 0.05 : 0;
 
             }
-
-
         }
     }
 }
+
+

@@ -4,37 +4,40 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
-import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.utils.HPacket;
+import org.bukkit.Bukkit;
 
-@CheckData(name = "Speed (A)", experimental = true)
+@CheckData(name = "Speed (A)",experimental = true)
 public class SpeedA extends Check {
 
     private double lastDeltaXZ;
     private boolean wasOnGround;
     private int threshold;
 
+
     @Override
-    public void onPacket(Packet packet, PlayerData playerData) {
-        if (packet.isFlying()) {
+    public void onPacket(HPacket packet, PlayerData playerData) {
+        if(packet.isMove()) {
+            double lastDeltaXZ = this.lastDeltaXZ;
+            this.lastDeltaXZ = playerData.getMovementProcessor().getDeltaXZ();
             boolean isOnGround = playerData.getBukkitPlayerFromUUID().isOnGround();
             boolean wasOnGround = this.wasOnGround;
-
+            this.wasOnGround = isOnGround;
             double predictedDeltaXZ = lastDeltaXZ * 0.91F;
             double result = (playerData.getMovementProcessor().getDeltaXZ() - predictedDeltaXZ) * 100;
 
-            if (!wasOnGround && !isOnGround) {
-                if (result >= 2.61D) {
-                    if (++threshold > 5) {
+            if(!wasOnGround && !isOnGround) {
+                if(result >= 2.61D) {
+                    if(++threshold > 5) {
                         setProbabilty((int) result);
-                        flag(playerData, "r=" + result);
+                        flag(playerData,"r=" + result);
 
                     }
-                } else threshold -= threshold > 0 ? 1 : 0;
-            }
+                }else threshold -= threshold > 0 ? 1 : 0;
 
-            this.lastDeltaXZ = playerData.getMovementProcessor().getDeltaXZ();
-            this.wasOnGround = isOnGround;
+
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ package gg.salers.honeybadger.check;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.utils.HPacket;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -30,10 +31,10 @@ public abstract class Check {
      * Method for doing checks
      *
      * @param playerData the data reliated to the check
-     * @param packet     the custom packet from packetcontainer
+     * @param packet    the custom packet based on protocollib
      **/
 
-    public abstract void onPacket(Packet packet, PlayerData playerData) throws IOException;
+    public abstract void onPacket(HPacket packet, PlayerData playerData);
 
     /**
      * Get the @CheckData in a check class
@@ -58,6 +59,7 @@ public abstract class Check {
      */
 
     protected void flag(PlayerData data, String moreInfo) {
+
 
         /** Exempting the player for prevent falses  **/
         if (data.getBukkitPlayerFromUUID().getAllowFlight() ||
@@ -95,15 +97,17 @@ public abstract class Check {
         toSendExp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + data.getBukkitPlayerFromUUID().getName()));
 
 
+
+
         if (this.probabilty > 5) {
             probabilty = 5;
         }
         if (this.probabilty == 0) {
             this.probabilty = 1;
         }
-
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("hbac.alerts")) {
+
                     vl++;
                     if (this.experimental) {
                         onlinePlayers.spigot().sendMessage(toSendExp);
@@ -112,10 +116,16 @@ public abstract class Check {
                         this.punish(data);
 
                     }
-                    delay = 0;
-                }
 
+
+
+
+
+
+            }
         }
+
+
     }
 
     /**
@@ -123,20 +133,24 @@ public abstract class Check {
      */
     protected void verbose(Object toVerbose) {
         Bukkit.broadcastMessage("§c§lVERBOSE: §f" + toVerbose);
+
     }
 
     /**
      * @param data the player to punish
      */
     protected void punish(PlayerData data) {
-        String toDispatch = ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().
-                getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
-                replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
-                replaceAll("%exp%", "").replaceAll("%vl%",
-                String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty)));
-        Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> Bukkit.dispatchCommand(
-                Bukkit.getConsoleSender(), toDispatch));
-        data.getBukkitPlayerFromUUID().getWorld().strikeLightningEffect(data.getBukkitPlayerFromUUID().getLocation());
-        this.vl = this.probabilty = this.delay = 0;
+            String toDispatch = ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().
+                    getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
+                    replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
+                    replaceAll("%exp%", "").replaceAll("%vl%",
+                    String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty)));
+            Bukkit.getScheduler().runTask(HoneyBadger.getInstance(),() -> Bukkit.dispatchCommand(
+                    Bukkit.getConsoleSender(),toDispatch));
+            data.getBukkitPlayerFromUUID().getWorld().strikeLightningEffect(data.getBukkitPlayerFromUUID().getLocation());
+            this.vl = this.probabilty = this.delay = 0;
+
+
+
     }
 }

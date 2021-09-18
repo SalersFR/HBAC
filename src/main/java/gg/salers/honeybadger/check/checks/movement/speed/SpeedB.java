@@ -1,39 +1,39 @@
 package gg.salers.honeybadger.check.checks.movement.speed;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
-import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.utils.HPacket;
 import gg.salers.honeybadger.utils.PlayerUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.potion.PotionEffectType;
 
 @CheckData(name = "Speed (B)", experimental = true)
 public class SpeedB extends Check {
     // TODO: exempt on teleport & velocity because those aren't handled
-    
+
     private float lastFriction = 0, friction = 0;
     private double lastDeltaXZ;
     private boolean wasOnGround;
     private int ground = 0, air = 0;
+    private double buffer;
 
     @Override
-    public void onPacket(Packet packet, PlayerData playerData) {
+    public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isFlying()) {
             // ground values
-            boolean onGround = packet.getBooleans().read(0);
+            boolean onGround = packet.getContainer().getBooleans().read(0);
             boolean wasOnGround = this.wasOnGround;
             this.wasOnGround = onGround;
-            
+
             air = onGround ? 0 : Math.min(air + 1, 20);
             ground = onGround ? Math.min(ground + 1, 20) : 0;
-            
+
             // deltas
             double deltaXZ = playerData.getMovementProcessor().getDeltaXZ();
             double lastDeltaXZ = this.lastDeltaXZ;
             this.lastDeltaXZ = deltaXZ;
-            
+
             // landMovementFactor
             float speed = PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.SPEED);
             float slow = PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.SLOW);
@@ -45,7 +45,7 @@ public class SpeedB extends Check {
             d += d * 0.30000001192092896;
 
             float landMovementFactor = (float) d;
-            
+
             // the check itself
             double prediction;
             if (ground > 2) {
@@ -59,7 +59,7 @@ public class SpeedB extends Check {
             }
             if (prediction < playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1))
                 prediction = playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1);
-            
+
             // very lazy patch for a false flag
             if (ground > 1) {
                 this.lastFriction = this.friction;
@@ -68,16 +68,22 @@ public class SpeedB extends Check {
 
             if (friction < lastFriction)
                 prediction += landMovementFactor * 1.25;
-            
+
+
+
+
             // flag
-            if (deltaXZ > prediction) {
-                flag(playerData, "p=" + prediction + " d=" + deltaXZ);
-            }
+            if (deltaXZ > prediction && playerData.getMovementProcessor().getTicksSinceHurt() > 32) {
+
+                if (++buffer > 4) {
+                    flag(playerData, "p=" + prediction + " d=" + deltaXZ);
+                }
+            } else if(buffer > 0)buffer -= 0.5D;
         }
     }
-    
+
     public float getBlockFriction(PlayerData playerData) {
         String block = playerData.getBukkitPlayerFromUUID().getLocation().add(0, -1, 0).getBlock().getType().name().toLowerCase();
-        return block.equals("blue ice") ? 0.989f : block.contains("ice") ? 0.98f : block.equals("slime") ? 0.8f : 0.6f; 
+        return block.equals("blue ice") ? 0.989f : block.contains("ice") ? 0.98f : block.equals("slime") ? 0.8f : 0.6f;
     }
 }

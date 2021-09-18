@@ -17,13 +17,15 @@ public class CombatProcessor {
     private EnumWrappers.EntityUseAction action;
     private long lastAttack;
 
-    private boolean attacking;
     private PlayerData data;
+
+    private boolean attacking;
+
     public CombatProcessor(PlayerData data) {
-      this.data = data;
+        this.data = data;
     }
 
-    public void handleReceive(PacketEvent event) {
+    public void handleCombat(PacketEvent event) {
         if(event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
             action = event.getPacket().getEntityUseActions().read(0);
             attacked = (LivingEntity)
@@ -31,10 +33,8 @@ public class CombatProcessor {
             setLastAttacked(attacked);
             lastAttack = System.currentTimeMillis();
             attacking = true;
+        }else if(event.getPacketType() == PacketType.Play.Client.KEEP_ALIVE) {
+            attacking = false;
         }
-    }
-
-    public void handleSend(PacketEvent event) {
-        attacking = false;
     }
 }

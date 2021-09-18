@@ -4,9 +4,8 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
-import gg.salers.honeybadger.check.Packet;
 import gg.salers.honeybadger.data.PlayerData;
-import gg.salers.honeybadger.processor.MovementProcessor;
+import gg.salers.honeybadger.utils.HPacket;
 
 @CheckData(name = "Flight (A)", experimental = true)
 public class FlightA extends Check {
@@ -14,32 +13,29 @@ public class FlightA extends Check {
     private double lastDeltaY;
     private int threshold;
 
+
     @Override
-    public void onPacket(Packet packet, PlayerData playerData) {
-        if (packet.isFlying()) {
-
+    public void onPacket(HPacket packet, PlayerData playerData) {
+        if(packet.isMove()) {
             double lastDeltaY = this.lastDeltaY;
+            this.lastDeltaY = playerData.getMovementProcessor().getDeltaY();
             double accelY = Math.abs(playerData.getMovementProcessor().getDeltaY() - lastDeltaY);
+            if (playerData.getMovementProcessor().isInLiquid()
+                    || playerData.getMovementProcessor().isNearBoat()
+                    || playerData.getMovementProcessor().isInWeb()
+                    || playerData.getMovementProcessor().isOnClimbable()) return;
+            if(playerData.getMovementProcessor().getEdgeBlockTicks() > 5) return;
 
-            handle: {
-                final MovementProcessor movementProcessor = playerData.getMovementProcessor();
+            if (playerData.getMovementProcessor().getAirTicks() > 15 && !playerData.getMovementProcessor().isAtTheEdgeOfABlock()) {
+                if (accelY < 0.0001) {
+                    if (++threshold > 15)
+                        setProbabilty((int) (accelY + 1));
+                    flag(playerData, "aY=" + accelY);
+                } else threshold -= threshold > 0 ? 1 : 0;
 
-                if (movementProcessor.isInLiquid()
-                        || movementProcessor.isNearBoat()
-                        || movementProcessor.isInWeb()
-                        || movementProcessor.isOnClimbable()
-                        || movementProcessor.getEdgeBlockTicks() > 5) break handle;
-
-                if (playerData.getMovementProcessor().getAirTicks() > 15
-                        && !playerData.getMovementProcessor().isAtTheEdgeOfABlock()) {
-                    if (accelY < 0.0001) {
-                        if (++threshold > 15) setProbabilty((int) (accelY + 1));
-                        flag(playerData, "aY=" + accelY);
-                    } else threshold -= threshold > 0 ? 1 : 0;
-                }
             }
 
-            this.lastDeltaY = playerData.getMovementProcessor().getDeltaY();
+
         }
     }
 }

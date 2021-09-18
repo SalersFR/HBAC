@@ -1,10 +1,7 @@
 package gg.salers.honeybadger.processor;
 
 import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.LocationUtils;
 import lombok.Data;
@@ -13,20 +10,24 @@ import lombok.Data;
 public class MovementProcessor {
 
     private double deltaX, deltaZ, deltaXZ, deltaY, lastX, lastY, lastZ;
-    ;
-    private int airTicks, edgeBlockTicks;
+    private PlayerData data ;
+    private int airTicks, edgeBlockTicks,ticksSinceHurt;
     private boolean isNearBoat, isInLiquid, isInWeb, isOnClimbable, isAtTheEdgeOfABlock;
-
-    private PlayerData data;
 
     public MovementProcessor(PlayerData data) {
         this.data = data;
+
     }
 
-    public void handle(PacketEvent event) {
-        if (event.getPacketType() == PacketType.Play.Client.POSITION_LOOK || event.getPacketType() == PacketType.Play.
-                Client.POSITION || event.getPacketType() == PacketType.Play.Client.LOOK ||
-                event.getPacketType() == PacketType.Play.Client.FLYING) {
+    public void handleMove(PacketEvent event) {
+        if (event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
+                .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
+
+
+            /**
+             * Getting the X one tick ago
+             * And setting the deltaX with the current X and last X
+             **/
             double x = event.getPlayer().getLocation().getX();
             deltaX = (x - this.lastX);
             this.lastX = x;
@@ -66,9 +67,15 @@ public class MovementProcessor {
             isInWeb = LocationUtils.isCollidingWithWeb(event.getPlayer());
             isOnClimbable = LocationUtils.isCollidingWithClimbable(event.getPlayer());
 
+            this.ticksSinceHurt++;
+
 
         }
 
 
+    }
+
+    public void handleEDBE() {
+        this.ticksSinceHurt = 0;
     }
 }

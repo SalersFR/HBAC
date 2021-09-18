@@ -1,8 +1,10 @@
 package gg.salers.honeybadger.utils;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,7 +15,11 @@ import java.util.function.Predicate;
 public class Cuboid {
     private double x1, x2, y1, y2, z1, z2;
 
-    public Cuboid(final PlayerLocation location) {
+    public Cuboid(final Location location) {
+        this(location.getX(), location.getY(), location.getZ());
+    }
+
+    public Cuboid(final Vector location) {
         this(location.getX(), location.getY(), location.getZ());
     }
 
@@ -70,11 +76,11 @@ public class Cuboid {
         return blocks;
     }
 
-    public Cuboid(final PlayerLocation playerLocation, final PlayerLocation playerLocation2) {
-        this(Math.min(playerLocation.getX(), playerLocation2.getX()), Math.max(playerLocation.getX(), playerLocation2.getX()), Math.min(playerLocation.getY(), playerLocation2.getY()), Math.max(playerLocation.getY(), playerLocation2.getY()), Math.min(playerLocation.getZ(), playerLocation2.getZ()), Math.max(playerLocation.getZ(), playerLocation2.getZ()));
+    public Cuboid(final Location Location, final Location Location2) {
+        this(Math.min(Location.getX(), Location2.getX()), Math.max(Location.getX(), Location2.getX()), Math.min(Location.getY(), Location2.getY()), Math.max(Location.getY(), Location2.getY()), Math.min(Location.getZ(), Location2.getZ()), Math.max(Location.getZ(), Location2.getZ()));
     }
 
-    public boolean contains(final PlayerLocation location) {
+    public boolean contains(final Location location) {
         return this.x1 <= location.getX() && this.x2 >= location.getX() && this.y1 <= location.getY() && this.y2 >= location.getY() && this.z1 <= location.getZ() && this.z2 >= location.getZ();
     }
 
