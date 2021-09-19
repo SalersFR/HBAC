@@ -1,25 +1,30 @@
-package gg.salers.honeybadger.processor;
+package gg.salers.honeybadger.processor.impl;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.Processor;
 import gg.salers.honeybadger.utils.LocationUtils;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-public class MovementProcessor {
+@Getter
+@Setter
+public class MovementProcessor extends Processor {
 
     private double deltaX, deltaZ, deltaXZ, deltaY, lastX, lastY, lastZ;
     private PlayerData data ;
     private int airTicks, edgeBlockTicks,ticksSinceHurt;
-    private boolean isNearBoat, isInLiquid, isInWeb, isOnClimbable, isAtTheEdgeOfABlock;
+    private boolean isNearBoat, isInLiquid, isInWeb, isOnClimbable, isAtTheEdgeOfABlock,mathGround;
 
     public MovementProcessor(PlayerData data) {
-        this.data = data;
+        super(data);
 
     }
 
-    public void handleMove(PacketEvent event) {
+    @Override
+    public void processIn(PacketEvent event) {
         if (event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
                 .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
 
@@ -28,7 +33,7 @@ public class MovementProcessor {
              * Getting the X one tick ago
              * And setting the deltaX with the current X and last X
              **/
-            double x = event.getPlayer().getLocation().getX();
+            double x = event.getPacket().getDoubles().read(0);
             deltaX = (x - this.lastX);
             this.lastX = x;
 
@@ -36,15 +41,17 @@ public class MovementProcessor {
              * Getting the Y one tick ago
              * And setting the deltaY with the current and last Y
              **/
-            double y = event.getPlayer().getLocation().getY();
+            double y = event.getPacket().getDoubles().read(1);
             deltaY = (y - this.lastY);
+            //Fixing a random bug idfk
+            if(deltaY >= 30.0D) deltaY = 0;
             this.lastY = y;
 
             /**
              * Getting the Z one tick ago
              * And setting the deltaZ with the current and last Z
              **/
-            double z = event.getPlayer().getLocation().getZ();
+            double z = event.getPacket().getDoubles().read(2);
             deltaZ = (z - this.lastZ);
             this.lastZ = z;
 
@@ -69,11 +76,17 @@ public class MovementProcessor {
 
             this.ticksSinceHurt++;
 
+            this.mathGround = y % 0.015625 == 0;
+
 
         }
+    }
 
+    @Override
+    public void processOut(PacketEvent event) {
 
     }
+
 
     public void handleEDBE() {
         this.ticksSinceHurt = 0;

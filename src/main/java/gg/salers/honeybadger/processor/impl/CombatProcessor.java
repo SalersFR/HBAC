@@ -1,4 +1,4 @@
-package gg.salers.honeybadger.processor;
+package gg.salers.honeybadger.processor.impl;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -7,25 +7,32 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.wrappers.EnumWrappers;
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.Processor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.LivingEntity;
 
-@Data
-public class CombatProcessor {
+@Getter
+@Setter
+public class CombatProcessor extends Processor {
 
     private LivingEntity attacked,lastAttacked;
     private EnumWrappers.EntityUseAction action;
     private long lastAttack;
 
-    private PlayerData data;
+
 
     private boolean attacking;
 
     public CombatProcessor(PlayerData data) {
-        this.data = data;
+        super(data);
     }
 
-    public void handleCombat(PacketEvent event) {
+
+
+    @Override
+    public void processIn(PacketEvent event) {
         if(event.getPacketType() == PacketType.Play.Client.USE_ENTITY) {
             action = event.getPacket().getEntityUseActions().read(0);
             attacked = (LivingEntity)
@@ -36,5 +43,10 @@ public class CombatProcessor {
         }else if(event.getPacketType() == PacketType.Play.Client.KEEP_ALIVE) {
             attacking = false;
         }
+    }
+
+    @Override
+    public void processOut(PacketEvent event) {
+
     }
 }

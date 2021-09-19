@@ -13,6 +13,10 @@ public class KillAuraC extends Check {
     private int armAnimations,attacks,threshold;
     private Location lastVictimLocation;
 
+    /**
+   got the idea from GladUrBad
+     */
+
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
@@ -29,6 +33,8 @@ public class KillAuraC extends Check {
                         }
                     }else threshold -= threshold > 0 ? 0.5 : 0;
                 }
+
+                attacks = armAnimations = 0;
             }
 
         }else if(packet.isAttack()) {

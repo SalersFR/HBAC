@@ -4,7 +4,29 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ca9ffef5-d8ef-46f2-8b2b-795ff9c686af" name="Changes" comment="" />
+    <list default="true" id="ca9ffef5-d8ef-46f2-8b2b-795ff9c686af" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimB.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraE.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/Processor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraC.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/misc/ground/GroundA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/misc/ground/GroundA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightB.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/step/StepA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/step/StepA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/PacketListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/PacketListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/CombatProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CombatProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/MovementProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/MovementProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/NetworkProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/NetworkProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/RotationProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/RotationProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/HPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/HPacket.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,6 +51,8 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -39,7 +63,24 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1627905011716</updated>
+      <workItem from="1631991961923" duration="357000" />
+      <workItem from="1631993210104" duration="16000" />
+      <workItem from="1632034839058" duration="3264000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

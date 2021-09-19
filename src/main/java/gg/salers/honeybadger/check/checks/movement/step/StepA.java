@@ -17,7 +17,7 @@ public class StepA extends Check {
                 groundTicks++;
             }else groundTicks = 0;
 
-            if(groundTicks > 2 && playerData.getMovementProcessor().getDeltaY() > 0.6) {
+            if(groundTicks > 2 && playerData.getMovementProcessor().getDeltaY() > 0.6 && playerData.getMovementProcessor().getDeltaXZ() > 0.1D) {
                 flag(playerData,"dY=" +playerData.getMovementProcessor().getDeltaY());
             }
         }

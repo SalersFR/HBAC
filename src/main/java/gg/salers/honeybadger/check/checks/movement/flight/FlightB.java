@@ -21,13 +21,17 @@ public class FlightB extends Check {
         if (packet.isMove()) {
             double lastDeltaY = this.lastDeltaY;
             this.lastDeltaY = playerData.getMovementProcessor().getDeltaY();
-            double predictedDeltaY = (lastDeltaY - 0.08) * 0.9800000190734863D;
+            double predictedDeltaY = (playerData.getMovementProcessor().getDeltaY() - 0.08) * 0.9800000190734863D;
+            if(predictedDeltaY < 0.005)
+                predictedDeltaY = 0;
+
             double result = Math.abs(playerData.getMovementProcessor().getDeltaY() - predictedDeltaY);
             if (playerData.getMovementProcessor().isInLiquid()
                     || playerData.getMovementProcessor().isNearBoat()
                     || playerData.getMovementProcessor().isInWeb()
                     || playerData.getMovementProcessor().isOnClimbable()) return;
             if(playerData.getMovementProcessor().getEdgeBlockTicks() > 5) return;
+
 
             if(playerData.getMovementProcessor().getAirTicks() > 15) {
 

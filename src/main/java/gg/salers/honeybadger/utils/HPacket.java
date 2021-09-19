@@ -10,6 +10,9 @@ public class HPacket {
     private PacketContainer container;
 
 
+    /**
+     CREDITS: MEDUSA (not the exact same thing but inspired of) github.com/GladUrBad/Medusa
+     */
 
     public HPacket(PacketType type, PacketContainer container) {
         this.type = type;

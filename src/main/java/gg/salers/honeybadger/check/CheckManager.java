@@ -1,11 +1,9 @@
 package gg.salers.honeybadger.check;
 
 import gg.salers.honeybadger.check.checks.combat.aim.AimA;
+import gg.salers.honeybadger.check.checks.combat.aim.AimB;
 import gg.salers.honeybadger.check.checks.combat.autoclicker.AutoclickerA;
-import gg.salers.honeybadger.check.checks.combat.killaura.KillAuraA;
-import gg.salers.honeybadger.check.checks.combat.killaura.KillAuraB;
-import gg.salers.honeybadger.check.checks.combat.killaura.KillAuraC;
-import gg.salers.honeybadger.check.checks.combat.killaura.KillAuraD;
+import gg.salers.honeybadger.check.checks.combat.killaura.*;
 import gg.salers.honeybadger.check.checks.combat.reach.ReachA;
 import gg.salers.honeybadger.check.checks.misc.ground.GroundA;
 import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolA;
@@ -35,11 +33,13 @@ public class CheckManager {
         this.checks = Arrays.asList(
 
                 new AimA(),
+                new AimB(),
                 new AutoclickerA(),
                 new KillAuraA(),
                 new KillAuraB(),
                 new KillAuraC(),
                 new KillAuraD(),
+                new KillAuraE(),
                 new ReachA(),
 
                 new GroundA(),

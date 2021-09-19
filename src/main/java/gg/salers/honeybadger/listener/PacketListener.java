@@ -24,9 +24,10 @@ public class PacketListener {
                         getPlayerData(event.getPlayer().getUniqueId());
 
                 /** handling data processor using ingoing packets**/
-                data.getMovementProcessor().handleMove(event);
-                data.getCombatProcessor().handleCombat(event);
-                data.getRotationProcessor().handleRotation(event);
+                data.getMovementProcessor().processIn(event);
+                data.getCombatProcessor().processIn(event);
+                data.getRotationProcessor().processIn(event);
+                data.getNetworkProcessor().processIn(event);
 
                 /** handling all PlayerData's Checks **/
                 for (Check checks : data.getChecks()) {
@@ -43,7 +44,7 @@ public class PacketListener {
 
 
                 /** handling data processor using outgoing packets**/
-                data.getNetworkProcessor().handleOutNetwork(event);
+                data.getNetworkProcessor().processOut(event);
 
                 /** handling all PlayerData's Checks **/
                 for (Check checks : data.getChecks()) {
