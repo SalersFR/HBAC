@@ -58,8 +58,8 @@ public class MathUtils {
      * @param previous - The previous value
      * @return - The GCD of those two values
      */
-    public long getGcd(final long current, final long previous) {
-        return (previous <= 16384L) ? current : getGcd(previous, current % previous);
+    public long getGcd1(final long current, final long previous) {
+        return (previous <= 16384L) ? current : getGcd1(previous, current % previous);
     }
 
     public double getSensitivity(final float tDeltaPitch, final float tLastDeltaPitch) {

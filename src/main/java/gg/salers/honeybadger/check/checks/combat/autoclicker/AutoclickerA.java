@@ -19,7 +19,7 @@ public class AutoclickerA extends Check {
             final int outliers = clickProcessor.getOutliers();
             final int diff = Math.abs(outliers - lastOutliers);
 
-            if(outliers <= 4 && diff <= 1) {
+            if(outliers <= 4 && diff <= 1 && clickProcessor.getSamples().size() >= 25) {
                 if(++buffer > 2.25)
                     flag(playerData,"diff=" + diff);
             } else if(buffer > 0) buffer -= 0.2D;

@@ -38,8 +38,23 @@ public class ClickProcessor extends Processor {
                 this.dupls = MathUtils.getDuplicates(samples);
             }
 
+
+
             samples.add(ticks);
             ticks = 0;
+
+            if(samples.size() >= 25) {
+                samples.remove(0);
+                samples.remove(1);
+                samples.remove(2);
+                samples.remove(3);
+                samples.remove(4);
+                samples.remove(5);
+                samples.remove(6);
+                samples.remove(7);
+                samples.remove(8);
+                samples.remove(9);
+            }
 
 
         } else if(event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
