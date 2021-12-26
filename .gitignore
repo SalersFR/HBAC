@@ -1,2 +1,6 @@
 
 *.class
+.idea/workspace.xml
+.idea/discord.xml
+.idea/HBACr.iml
+.idea/misc.xml

@@ -10,41 +10,38 @@ import org.bukkit.entity.EntityType;
 @CheckData(name = "KillAura (E)",experimental = true)
 public class KillAuraE extends Check {
 
-    private int ticks;
+    private int ticks,buffer;
     private double lastDeltaXZ;
-    private double buffer;
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if(packet.isAttack()) {
-            this.ticks = 0;
-        }else if(packet.isFlying()) {
+            ticks = 0;
+        } else if(packet.isFlying()) {
 
-            final MovementProcessor movementProcessor = playerData.getMovementProcessor();
+            if(playerData.getCombatProcessor().getLastAttacked() == null) return;
 
-            final double deltaXZ = movementProcessor.getDeltaXZ();
-            final double lastDeltaXZ = this.lastDeltaXZ;
+            final double deltaXZ = playerData.getMovementProcessor().getDeltaXZ();
+            final double lastDeltaXZ =  this.lastDeltaXZ;
 
             this.lastDeltaXZ = deltaXZ;
 
             final double accelerationXZ = Math.abs(deltaXZ - lastDeltaXZ);
 
-            if(deltaXZ > 0.19D
-                    && playerData.getBukkitPlayerFromUUID().isSprinting()
-                    && accelerationXZ < 0.00001D
-                    && playerData.getCombatProcessor().getAttacked().getType() == EntityType.PLAYER && ticks <= 2) {
 
-                if(++buffer > 6) {
+            if(deltaXZ > 0.16 && playerData.getBukkitPlayerFromUUID().isSprinting()
+                    && accelerationXZ < 0.005D && ticks <= 2 && playerData.getCombatProcessor().
+                    getLastAttacked().getType() == EntityType.PLAYER) {
+                if(++buffer > 7) {
                     buffer /= 2;
-                    flag(playerData,"accel=" + accelerationXZ);
+                    flag(playerData,"a=" + accelerationXZ);
                 }
-
-
-
-            } else if(buffer > 0) buffer -= 2.5D;
+            } else if(buffer > 0) buffer -= 0.3D;
 
 
             this.ticks++;
+
         }
+
     }
 }
