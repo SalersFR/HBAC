@@ -11,7 +11,7 @@ import gg.salers.honeybadger.utils.HPacket;
 @CheckData(name = "KillAura (A)", experimental = false)
 public class KillAuraA extends Check {
 
-    private int threshold;
+
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
@@ -19,12 +19,12 @@ public class KillAuraA extends Check {
             long deltaFlying = Math.abs(System.currentTimeMillis() - playerData.getNetworkProcessor().getLastFlying());
             if (deltaFlying < 25L) {
                 if (playerData.getNetworkProcessor().getKpPing() < 175) {
-                    if(++threshold > 5) {
+                    if(++buffer > 5) {
                         setProbabilty((int) deltaFlying);
                         flag(playerData, "dF=" + deltaFlying);
                     }
                 }
-            }else threshold = 0;
+            }else buffer = 0;
         }
     }
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 public class FlightB extends Check {
 
     private double lastDeltaY;
-    private int threshold;
+
 
 
     @Override
@@ -36,11 +36,11 @@ public class FlightB extends Check {
             if(playerData.getMovementProcessor().getAirTicks() > 15) {
 
                 if(result > 0.01) {
-                    if (++threshold > 2) {
+                    if (++buffer > 2) {
                         setProbabilty((int) (result * 10));
                         flag(playerData, "r=" + result);
                     }
-                }else threshold -= threshold > 0 ? 0.05 : 0;
+                }else buffer -= buffer > 0 ? 0.05 : 0;
 
             }
 

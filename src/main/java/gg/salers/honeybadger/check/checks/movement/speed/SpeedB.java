@@ -16,7 +16,7 @@ public class SpeedB extends Check {
     private double lastDeltaXZ;
     private boolean wasOnGround;
     private int ground = 0, air = 0;
-    private double buffer;
+
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {

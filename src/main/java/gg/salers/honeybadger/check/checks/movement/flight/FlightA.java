@@ -11,7 +11,7 @@ import gg.salers.honeybadger.utils.HPacket;
 public class FlightA extends Check {
 
     private double lastDeltaY;
-    private int threshold;
+
 
 
     @Override
@@ -28,10 +28,10 @@ public class FlightA extends Check {
 
             if (playerData.getMovementProcessor().getAirTicks() > 15 && !playerData.getMovementProcessor().isAtTheEdgeOfABlock()) {
                 if (accelY < 0.0001) {
-                    if (++threshold > 15)
+                    if (++buffer > 15)
                         setProbabilty((int) (accelY + 1));
                     flag(playerData, "aY=" + accelY);
-                } else threshold -= threshold > 0 ? 1 : 0;
+                } else buffer -= buffer > 0 ? 1 : 0;
 
             }
 

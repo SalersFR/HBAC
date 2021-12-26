@@ -10,7 +10,7 @@ import org.bukkit.Location;
 @CheckData(name = "KillAura (C)",experimental = true)
 public class KillAuraC extends Check {
 
-    private int armAnimations,attacks,threshold;
+    private int armAnimations,attacks,buffer;
     private Location lastVictimLocation;
 
     /**
@@ -28,10 +28,10 @@ public class KillAuraC extends Check {
                         getLastAttacked().getEntityId() &&lastVictimLocation.getPitch() != playerData.getCombatProcessor().
                         getLastAttacked().getLocation().getPitch() ) {
                     if(attacks >= 80) {
-                        if(++threshold > 2) {
+                        if(++buffer > 2) {
                             flag(playerData,"a=" +attacks);
                         }
-                    }else threshold -= threshold > 0 ? 0.5 : 0;
+                    }else buffer -= buffer > 0 ? 0.5 : 0;
                 }
 
                 attacks = armAnimations = 0;

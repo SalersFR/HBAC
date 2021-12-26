@@ -5,8 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca9ffef5-d8ef-46f2-8b2b-795ff9c686af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/ClickProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/autoclicker/AutoclickerA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/autoclicker/AutoclickerA.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

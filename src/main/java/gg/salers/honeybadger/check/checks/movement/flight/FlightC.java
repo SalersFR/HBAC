@@ -9,7 +9,7 @@ import gg.salers.honeybadger.utils.HPacket;
 public class FlightC extends Check {
 
     private double lastDeltaY;
-    private int threshold;
+
 
 
     @Override
@@ -25,11 +25,11 @@ public class FlightC extends Check {
 
             if (playerData.getMovementProcessor().getAirTicks() > 15) {
                 if (playerData.getMovementProcessor().getDeltaY() > lastDeltaY) {
-                    if (++threshold > 2) {
+                    if (++buffer > 2) {
                         setProbabilty(1);
                         flag(playerData, "dY=" + playerData.getMovementProcessor().getDeltaY() + " lDY=" + lastDeltaY);
                     }
-                } else threshold -= threshold > 0 ? 0.05 : 0;
+                } else buffer -= buffer > 0 ? 0.05 : 0;
 
             }
         }

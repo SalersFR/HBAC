@@ -4,10 +4,7 @@ package gg.salers.honeybadger.data;
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckManager;
-import gg.salers.honeybadger.processor.impl.CombatProcessor;
-import gg.salers.honeybadger.processor.impl.MovementProcessor;
-import gg.salers.honeybadger.processor.impl.NetworkProcessor;
-import gg.salers.honeybadger.processor.impl.RotationProcessor;
+import gg.salers.honeybadger.processor.impl.*;
 import gg.salers.honeybadger.utils.PlayerLocation;
 import lombok.Data;
 import org.bukkit.Bukkit;
@@ -26,6 +23,7 @@ public class PlayerData {
     private CombatProcessor combatProcessor;
     private NetworkProcessor networkProcessor;
     private RotationProcessor rotationProcessor;
+    private final ClickProcessor clickProcessor;
     private CheckManager checkManager;
     private List<PlayerLocation> playerLocationList;
 
@@ -39,6 +37,7 @@ public class PlayerData {
         this.combatProcessor = new CombatProcessor(this);
         this.networkProcessor = new NetworkProcessor(this);
         this.rotationProcessor = new RotationProcessor(this);
+        this.clickProcessor = new ClickProcessor(this);
         this.checkManager = new CheckManager(this);
         this.uuid = uuid;
         this.checks = this.checkManager.getChecks();

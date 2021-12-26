@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @CheckData(name = "Reach (A)", experimental = false)
 public class ReachA extends Check {
 
-    private int threshold;
+
 
     /**
      * Getting multiple locations in a range
@@ -49,10 +49,10 @@ public class ReachA extends Check {
             float distance = (float) cuboidList.stream().mapToDouble(cuboid ->
                     cuboid.distanceXZ(attacker.getX(), attacker.getZ()) - 0.3f).min().orElse(0);
             if (distance > 3.1f) {
-                if (++threshold > 8) {
+                if (++buffer > 8) {
                     flag(playerData, "d=" + distance);
                 }
-            } else threshold -= threshold > 0 ? 1 : 0;
+            } else buffer -= buffer > 0 ? 1 : 0;
 
         }
     }

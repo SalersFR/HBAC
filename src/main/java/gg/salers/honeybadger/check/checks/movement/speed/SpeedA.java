@@ -13,7 +13,7 @@ public class SpeedA extends Check {
 
     private double lastDeltaXZ;
     private boolean wasOnGround;
-    private int threshold;
+
 
 
     @Override
@@ -29,12 +29,12 @@ public class SpeedA extends Check {
 
             if(!wasOnGround && !isOnGround) {
                 if(result >= 2.61D) {
-                    if(++threshold > 5) {
+                    if(++buffer > 5) {
                         setProbabilty((int) result);
                         flag(playerData,"r=" + result);
 
                     }
-                }else threshold -= threshold > 0 ? 1 : 0;
+                }else buffer -= buffer > 0 ? 1 : 0;
 
 
             }

@@ -28,6 +28,7 @@ public class PacketListener {
                 data.getCombatProcessor().processIn(event);
                 data.getRotationProcessor().processIn(event);
                 data.getNetworkProcessor().processIn(event);
+                data.getClickProcessor().processIn(event);
 
                 /** handling all PlayerData's Checks **/
                 for (Check checks : data.getChecks()) {

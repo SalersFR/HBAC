@@ -8,7 +8,7 @@ import gg.salers.honeybadger.utils.MathUtils;
 
 public class AimB extends Check {
 
-    private double buffer,lastDeltaPitch;
+    private double lastDeltaPitch;
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
@@ -18,7 +18,6 @@ public class AimB extends Check {
 
             final double deltaYaw = rotationProcessor.getDeltaYaw();
             final double deltaPitch = rotationProcessor.getDeltaPitch();
-
 
             final double pitch = rotationProcessor.getPitch();
 
@@ -32,9 +31,9 @@ public class AimB extends Check {
             if(gcd <= 0.0D && !exempt) {
                 if(++buffer > 7) {
                     flag(playerData,"gcd=" + gcd) ;
-                    buffer /= 2;
+                    buffer -= 1.25;
                 }
-            } else buffer -= 0.75D;
+            } else buffer -= 0.25D;
         }
     }
 }

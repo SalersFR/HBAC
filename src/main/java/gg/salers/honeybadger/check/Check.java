@@ -25,6 +25,7 @@ public abstract class Check {
     private char type;
     private int vl, probabilty, delay;
     private boolean experimental;
+    protected double buffer = 0;
 
 
     /**
