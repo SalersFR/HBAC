@@ -14,9 +14,9 @@ import java.util.List;
 @Getter
 public class ClickProcessor extends Processor {
 
+    private final List<Integer> samples = new ArrayList<>(25);
     private double deviation, kurtosis, variance, skewness, cps;
     private int ticks, outliers, dupls;
-    private final List<Integer> samples = new ArrayList<>(25);
 
     public ClickProcessor(PlayerData data) {
         super(data);
@@ -39,33 +39,22 @@ public class ClickProcessor extends Processor {
             }
 
 
-
             samples.add(ticks);
             ticks = 0;
 
-            if(samples.size() >= 25) {
-                samples.remove(0);
-                samples.remove(1);
-                samples.remove(2);
-                samples.remove(3);
-                samples.remove(4);
-                samples.remove(5);
-                samples.remove(6);
-                samples.remove(7);
-                samples.remove(8);
-                samples.remove(9);
+            if (samples.size() >= 25) {
+                samples.subList(0, 10).clear();
+
             }
 
 
-        } else if(event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
+        } else if (event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
                 .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
+
             ticks++;
-        } else if(event.getPacketType() == PacketType.Play.Client.BLOCK_DIG) {
-            if(samples.size() >= 4) {
-                samples.remove(0);
-                samples.remove(1);
-                samples.remove(2);
-                samples.remove(3);
+        } else if (event.getPacketType() == PacketType.Play.Client.BLOCK_DIG) {
+            if (samples.size() >= 4) {
+                samples.subList(0, 3).clear();
             }
         }
     }

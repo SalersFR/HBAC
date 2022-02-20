@@ -5,20 +5,17 @@ import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.HPacket;
 
-@CheckData(name = "Step (A)",experimental = true)
+@CheckData(name = "Step (A)", experimental = true)
 public class StepA extends Check {
 
-    private int groundTicks;
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if(packet.isMove()) {
-            if(playerData.getBukkitPlayerFromUUID().isOnGround()) {
-                groundTicks++;
-            }else groundTicks = 0;
+        if (packet.isMove()) {
 
-            if(groundTicks > 2 && playerData.getMovementProcessor().getDeltaY() > 0.6 && playerData.getMovementProcessor().getDeltaXZ() > 0.1D) {
-                flag(playerData,"dY=" +playerData.getMovementProcessor().getDeltaY());
+            if (playerData.getCollisionProcessor().getClientGroundTicks() > 2 && playerData.getMovementProcessor().
+                    getDeltaY() > 0.6 && playerData.getMovementProcessor().getDeltaXZ() > 0.1D) {
+                flag(playerData, "dY=" + playerData.getMovementProcessor().getDeltaY());
             }
         }
     }

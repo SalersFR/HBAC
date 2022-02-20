@@ -1,6 +1,5 @@
 package gg.salers.honeybadger.check;
 
-import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.HPacket;
@@ -15,24 +14,23 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
-import java.io.IOException;
+import java.util.Locale;
 
 @Getter
 @Setter
 public abstract class Check {
 
+    protected double buffer = 0;
     private String name;
     private char type;
     private int vl, probabilty, delay;
     private boolean experimental;
-    protected double buffer = 0;
-
 
     /**
      * Method for doing checks
      *
      * @param playerData the data reliated to the check
-     * @param packet    the custom packet based on protocollib
+     * @param packet     the custom packet based on protocollib
      **/
 
     public abstract void onPacket(HPacket packet, PlayerData playerData);
@@ -98,29 +96,25 @@ public abstract class Check {
         toSendExp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + data.getBukkitPlayerFromUUID().getName()));
 
 
-
-
         if (this.probabilty > 5) {
             probabilty = 5;
         }
         if (this.probabilty == 0) {
             this.probabilty = 1;
         }
+
+        vl++;
+
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("hbac.alerts")) {
 
-                    vl++;
-                    if (this.experimental) {
-                        onlinePlayers.spigot().sendMessage(toSendExp);
-                    } else onlinePlayers.spigot().sendMessage(toSend);
-                    if (this.vl > HoneyBadger.getInstance().getConfig().getInt("honeybadger.punish-vl")) {
-                        this.punish(data);
+                if (this.experimental) {
+                    onlinePlayers.spigot().sendMessage(toSendExp);
+                } else onlinePlayers.spigot().sendMessage(toSend);
+                if (this.vl > getPunishVl() && isPunish()) {
+                    this.punish(data);
 
-                    }
-
-
-
-
+                }
 
 
             }
@@ -141,17 +135,32 @@ public abstract class Check {
      * @param data the player to punish
      */
     protected void punish(PlayerData data) {
-            String toDispatch = ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().
-                    getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
-                    replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
-                    replaceAll("%exp%", "").replaceAll("%vl%",
-                    String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty)));
-            Bukkit.getScheduler().runTask(HoneyBadger.getInstance(),() -> Bukkit.dispatchCommand(
-                    Bukkit.getConsoleSender(),toDispatch));
-            data.getBukkitPlayerFromUUID().getWorld().strikeLightningEffect(data.getBukkitPlayerFromUUID().getLocation());
-            this.vl = this.probabilty = this.delay = 0;
+        String toDispatch = ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().
+                getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
+                replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
+                replaceAll("%exp%", "").replaceAll("%vl%",
+                String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty)));
+        Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> Bukkit.dispatchCommand(
+                Bukkit.getConsoleSender(), toDispatch));
+        data.getBukkitPlayerFromUUID().getWorld().strikeLightningEffect(data.getBukkitPlayerFromUUID().getLocation());
+        this.vl = this.probabilty = this.delay = 0;
 
 
+    }
 
+    public String getPath(String path) {
+        return ("checks." + name + "." + type + "." + path).toLowerCase(Locale.ROOT);
+    }
+
+    public boolean isEnabled() {
+        return HoneyBadger.getInstance().getConfig().getBoolean(getPath("enabled"));
+    }
+
+    public int getPunishVl() {
+        return HoneyBadger.getInstance().getConfig().getInt(getPath("punish-vl"));
+    }
+
+    public boolean isPunish() {
+        return HoneyBadger.getInstance().getConfig().getBoolean(getPath("punish"));
     }
 }

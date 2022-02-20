@@ -1,27 +1,26 @@
 package gg.salers.honeybadger.utils;
 
 import com.comphenix.protocol.wrappers.Pair;
-import lombok.experimental.UtilityClass;
-
 import com.google.common.collect.Lists;
+import lombok.experimental.UtilityClass;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @UtilityClass
 public class MathUtils {
 
-    /** Credits to Gaetan **/
+    public final double EXPANDER = Math.pow(2, 24);
+
+
+    /**
+     * Credits to Gaetan
+     **/
     public int floor(final double var0) {
         final int var2 = (int) var0;
         return var0 < var2 ? var2 - 1 : var2;
@@ -46,6 +45,16 @@ public class MathUtils {
             return getGcd(b, a - Math.floor(a / b) * b);
         }
     }
+
+    public long getAbsoluteGcd(final float current, final float last) {
+
+        final long currentExpanded = (long) (current * EXPANDER);
+
+        final long lastExpanded = (long) (last * EXPANDER);
+
+        return (long) getGcd(currentExpanded, lastExpanded);
+    }
+
 
     public double gcd(final double limit, final double a, final double b) {
         return b <= limit ? a : MathUtils.gcd(limit, b, a % b);
@@ -105,7 +114,6 @@ public class MathUtils {
     /**
      * @param data - The set of numbers / data you want to find the standard deviation from.
      * @return - The standard deviation using the square root of the variance.
-     *
      * @See - https://en.wikipedia.org/wiki/Standard_deviation
      * @See - https://en.wikipedia.org/wiki/Variance
      */
@@ -117,10 +125,8 @@ public class MathUtils {
     }
 
     /**
-     *
      * @param data - The set of numbers / data you want to find the skewness from
      * @return - The skewness running the standard skewness formula.
-     *
      * @See - https://en.wikipedia.org/wiki/Skewness
      */
     public double getSkewness(final Collection<? extends Number> data) {
@@ -141,13 +147,12 @@ public class MathUtils {
         Collections.sort(numbers);
 
         // Run the formula to get skewness
-        final double mean =  sum / count;
+        final double mean = sum / count;
         final double median = (count % 2 != 0) ? numbers.get(count / 2) : (numbers.get((count - 1) / 2) + numbers.get(count / 2)) / 2;
         final double variance = getVariance(data);
 
         return 3 * (mean - median) / variance;
     }
-
 
 
     public static int getDistinct(final Collection<? extends Number> collection) {
@@ -195,10 +200,8 @@ public class MathUtils {
     }
 
     /**
-     *
      * @param data - The set of numbers/data you want to get the kurtosis from
      * @return - The kurtosis using the standard kurtosis formula
-     *
      * @See - https://en.wikipedia.org/wiki/Kurtosis
      */
     public double getKurtosis(final Collection<? extends Number> data) {
@@ -232,7 +235,6 @@ public class MathUtils {
     /**
      * @param data - The data you want the median from
      * @return - The middle number of that data
-     *
      * @See - https://en.wikipedia.org/wiki/Median
      */
     private double getMedian(final List<Double> data) {
@@ -246,7 +248,7 @@ public class MathUtils {
 
     /**
      * @param from - The last location
-     * @param to - The current location
+     * @param to   - The current location
      * @return - The horizontal distance using (x^2 + z^2)
      */
     public double getMagnitude(final Location from, final Location to) {
@@ -275,7 +277,6 @@ public class MathUtils {
     }
 
     /**
-     *
      * @param data - The sample of clicks you want to get the cps from
      * @return - The cps using the average as a method of calculation
      */

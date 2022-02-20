@@ -1,37 +1,32 @@
 package gg.salers.honeybadger.check.checks.movement.flight;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.impl.CollisionProcessor;
 import gg.salers.honeybadger.utils.HPacket;
 
 @CheckData(name = "Flight (A)", experimental = true)
 public class FlightA extends Check {
 
-    private double lastDeltaY;
-
-
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if(packet.isMove()) {
-            double lastDeltaY = this.lastDeltaY;
-            this.lastDeltaY = playerData.getMovementProcessor().getDeltaY();
-            double accelY = Math.abs(playerData.getMovementProcessor().getDeltaY() - lastDeltaY);
-            if (playerData.getMovementProcessor().isInLiquid()
-                    || playerData.getMovementProcessor().isNearBoat()
-                    || playerData.getMovementProcessor().isInWeb()
-                    || playerData.getMovementProcessor().isOnClimbable()) return;
-            if(playerData.getMovementProcessor().getEdgeBlockTicks() > 5) return;
+        if (packet.isMove()) {
 
-            if (playerData.getMovementProcessor().getAirTicks() > 15 && !playerData.getMovementProcessor().isAtTheEdgeOfABlock()) {
+            final double accelY = Math.abs(playerData.getMovementProcessor().getDeltaY() - playerData.getMovementProcessor().getLastDeltaY());
+            final CollisionProcessor collisionProcessor = playerData.getCollisionProcessor();
+
+            final boolean exempt = collisionProcessor.isInLiquid() || collisionProcessor.isNearBoat() ||
+                    collisionProcessor.isInWeb() || collisionProcessor.isOnClimbable();
+
+
+            if (collisionProcessor.getClientAirTicks() > 9 && !exempt) {
                 if (accelY < 0.0001) {
-                    if (++buffer > 15)
+                    if (++buffer > 5)
                         setProbabilty((int) (accelY + 1));
                     flag(playerData, "aY=" + accelY);
-                } else buffer -= buffer > 0 ? 1 : 0;
+                } else buffer -= buffer > 0 ? 0.2 : 0;
 
             }
 

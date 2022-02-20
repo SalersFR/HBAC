@@ -2,6 +2,7 @@ package gg.salers.honeybadger.check;
 
 import gg.salers.honeybadger.check.checks.combat.aim.AimA;
 import gg.salers.honeybadger.check.checks.combat.aim.AimB;
+import gg.salers.honeybadger.check.checks.combat.aim.AimC;
 import gg.salers.honeybadger.check.checks.combat.autoclicker.AutoclickerA;
 import gg.salers.honeybadger.check.checks.combat.killaura.*;
 import gg.salers.honeybadger.check.checks.combat.reach.ReachA;
@@ -11,9 +12,7 @@ import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolB;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightA;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightB;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightC;
-import gg.salers.honeybadger.check.checks.movement.jump.JumpA;
 import gg.salers.honeybadger.check.checks.movement.speed.SpeedA;
-import gg.salers.honeybadger.check.checks.movement.speed.SpeedB;
 import gg.salers.honeybadger.check.checks.movement.step.StepA;
 import gg.salers.honeybadger.data.PlayerData;
 import lombok.Getter;
@@ -34,6 +33,7 @@ public class CheckManager {
 
                 new AimA(),
                 new AimB(),
+                new AimC(),
                 new AutoclickerA(),
                 new KillAuraA(),
                 new KillAuraB(),
@@ -50,7 +50,6 @@ public class CheckManager {
                 new FlightB(),
                 new FlightC(),
                 new SpeedA(),
-                new SpeedB(),
                 new StepA()
                 //new JumpA()
 

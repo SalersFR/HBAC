@@ -11,18 +11,17 @@ public class AutoclickerA extends Check {
 
     private int lastOutliers;
 
-
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if(packet.isArmAnimation()) {
+        if (packet.isArmAnimation()) {
             final ClickProcessor clickProcessor = playerData.getClickProcessor();
             final int outliers = clickProcessor.getOutliers();
             final int diff = Math.abs(outliers - lastOutliers);
 
-            if(outliers <= 4 && diff <= 1 && clickProcessor.getSamples().size() >= 25) {
-                if(++buffer > 2.25)
-                    flag(playerData,"diff=" + diff);
-            } else if(buffer > 0) buffer -= 0.2D;
+            if (outliers <= 4 && diff <= 1 && clickProcessor.getSamples().size() >= 25) {
+                if (++buffer > 2.25)
+                    flag(playerData, "diff=" + diff);
+            } else if (buffer > 0) buffer -= 0.2D;
 
             lastOutliers = outliers;
         }

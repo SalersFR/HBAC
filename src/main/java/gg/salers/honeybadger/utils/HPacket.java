@@ -6,27 +6,28 @@ import com.comphenix.protocol.wrappers.EnumWrappers;
 
 public class HPacket {
 
-    private PacketType type;
-    private PacketContainer container;
-
+    private final PacketType type;
+    private final PacketContainer container;
 
     /**
-     CREDITS: MEDUSA (not the exact same thing but inspired of) github.com/GladUrBad/Medusa
+     * CREDITS: MEDUSA (not the exact same thing but inspired of) github.com/GladUrBad/Medusa
      */
 
     public HPacket(PacketType type, PacketContainer container) {
         this.type = type;
         this.container = container;
     }
+
     public PacketContainer getContainer() {
         return container;
     }
+
     public PacketType getType() {
         return type;
     }
 
     public boolean isMove() {
-        return type == PacketType.Play.Client.POSITION || type == PacketType.Play.Client.POSITION_LOOK ;
+        return type == PacketType.Play.Client.POSITION || type == PacketType.Play.Client.POSITION_LOOK;
     }
 
     public boolean isUseEntity() {
@@ -65,9 +66,6 @@ public class HPacket {
     public boolean isRelMove() {
         return type == PacketType.Play.Server.REL_ENTITY_MOVE;
     }
-
-
-
 
 
 }

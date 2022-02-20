@@ -2,9 +2,9 @@ package gg.salers.honeybadger.data;
 
 
 import lombok.Getter;
+import org.bukkit.entity.Player;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerDataManager {
@@ -12,41 +12,41 @@ public class PlayerDataManager {
     @Getter
     private static PlayerDataManager instance = new PlayerDataManager();
 
-    /** Data cache **/
-    private final Map<UUID, PlayerData> uuidPlayerDataMap = new ConcurrentHashMap<>();
+    /**
+     * Data cache
+     **/
+    private final Map<Player, PlayerData> playerPlayerDataMap = new ConcurrentHashMap<>();
 
     /**
      * Getting a PlayerData from the cache
      *
-     * @param uuid the uuid for getting a PlayerData
-     * @return a PlayerData from the param uuid
+     * @param player the player for getting a PlayerData
+     * @return a PlayerData from the param player
      **/
 
-    public PlayerData getPlayerData(UUID uuid) {
-        return this.uuidPlayerDataMap.get(uuid);
+    public PlayerData getPlayerData(Player player) {
+        return this.playerPlayerDataMap.get(player);
     }
 
     /**
      * Adding a PlayerData to a cache
      *
-     * @param uuid the uuid to add in the cache and a new instance of a PlayerData
+     * @param player the player to add in the cache and a new instance of a PlayerData
      */
 
-    public void add(UUID uuid) {
-        this.uuidPlayerDataMap.put(uuid,new PlayerData(uuid));
+    public void add(Player player) {
+        this.playerPlayerDataMap.put(player, new PlayerData(player));
     }
 
     /**
      * Removing a PlayerData from the cache
      *
-     * @param uuid the uuid to remove in the cache and also remove the PlayerData reliated to the uuid
+     * @param player the player to remove in the cache and also remove the PlayerData reliated to the player
      */
 
-    public void remove(UUID uuid) {
-        this.uuidPlayerDataMap.remove(uuid,this.getPlayerData(uuid));
+    public void remove(Player player) {
+        this.playerPlayerDataMap.remove(player, this.getPlayerData(player));
     }
-
-
 
 
 }

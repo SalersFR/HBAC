@@ -13,7 +13,6 @@ public class LocationUtils {
 
 
     /**
-     *
      * @param loc the location of the block to get
      * @return the block at the location
      */
@@ -121,5 +120,27 @@ public class LocationUtils {
         return b1.getBlock().getType() != Material.AIR || b2.getBlock().getType() != Material.AIR ||
                 b3.getBlock().getType() != Material.AIR || b4.getBlock().getType() != Material.AIR;
 
+    }
+
+    public boolean blockNearHead(final Location location) {
+        final double expand = 0.31;
+
+        for (double x = -expand; x <= expand; x += expand) {
+            for (double z = -expand; z <= expand; z += expand) {
+                if (location.clone().add(x, 2.0, z).getBlock().getType() != Material.AIR)
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean haveABlockNearHead(final Location location) {
+        final Block highest = location.getWorld().getHighestBlockAt(location);
+
+        if (highest.getType() != Material.AIR) {
+            return true;
+        }
+
+        return false;
     }
 }

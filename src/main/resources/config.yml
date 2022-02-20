@@ -8,4 +8,82 @@ honeybadger:
   # %player% the presumed cheater
   alert-message: "&cHBAC &7// &f%player% &7flagged &7%exp% &f%check% &7(%type%)&8 (&cvl: &d%vl% &cProbabilty:&d %probabilty%&7&8)"
   punish-command: "kick %player% &cHBAC &7/ Cheating"
-  punish-vl: 15
+
+checks:
+  aim:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+    b:
+      enabled: true
+      punish: true
+      punish-vl: 25
+    c:
+      enabled: true
+      punish: true
+      punish-vl: 25
+  autoclicker:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  killaura:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+    b:
+      enabled: true
+      punish: true
+      punish-vl: 25
+    c:
+      enabled: true
+      punish: true
+      punish-vl: 10
+    d:
+      enabled: true
+      punish: true
+      punish-vl: 25
+    e:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  reach:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  ground:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  flight:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+    b:
+      enabled: true
+      punish: true
+      punish-vl: 25
+    c:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  jump:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  speed:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
+  step:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10

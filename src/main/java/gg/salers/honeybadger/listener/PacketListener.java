@@ -7,32 +7,31 @@ import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.Processor;
 import gg.salers.honeybadger.utils.HPacket;
 
 public class PacketListener {
 
 
     public PacketListener() {
-        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(HoneyBadger.getInstance(), PacketType.values()) {
 
+        ProtocolLibrary.getProtocolManager().addPacketListener(new PacketAdapter(HoneyBadger.getInstance(), PacketType.values()) {
 
             @Override
             public void onPacketReceiving(PacketEvent event) {
 
                 /** getting the player's data **/
                 PlayerData data = HoneyBadger.getInstance().getPlayerDataManager().
-                        getPlayerData(event.getPlayer().getUniqueId());
+                        getPlayerData(event.getPlayer());
 
                 /** handling data processor using ingoing packets**/
-                data.getMovementProcessor().processIn(event);
-                data.getCombatProcessor().processIn(event);
-                data.getRotationProcessor().processIn(event);
-                data.getNetworkProcessor().processIn(event);
-                data.getClickProcessor().processIn(event);
+                for (Processor processors : data.getProcessors())
+                    processors.processIn(event);
 
                 /** handling all PlayerData's Checks **/
                 for (Check checks : data.getChecks()) {
-                    checks.onPacket(new HPacket(event.getPacketType(),event.getPacket()), data);
+                    //if (checks.isEnabled())
+                    checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
                 }
             }
 
@@ -41,15 +40,18 @@ public class PacketListener {
 
                 /** getting the player's data **/
                 PlayerData data = HoneyBadger.getInstance().getPlayerDataManager().
-                        getPlayerData(event.getPlayer().getUniqueId());
+                        getPlayerData(event.getPlayer());
 
 
                 /** handling data processor using outgoing packets**/
-                data.getNetworkProcessor().processOut(event);
+                for (Processor processors : data.getProcessors())
+                    processors.processOut(event);
+
 
                 /** handling all PlayerData's Checks **/
                 for (Check checks : data.getChecks()) {
-                    checks.onPacket(new HPacket(event.getPacketType(),event.getPacket()), data);
+                    if (checks.isEnabled())
+                        checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
                 }
             }
 
@@ -59,3 +61,6 @@ public class PacketListener {
 
 
 }
+
+
+

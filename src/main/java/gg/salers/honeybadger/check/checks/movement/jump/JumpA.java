@@ -3,6 +3,7 @@ package gg.salers.honeybadger.check.checks.movement.jump;
 import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckData;
 import gg.salers.honeybadger.data.PlayerData;
+import gg.salers.honeybadger.processor.impl.CollisionProcessor;
 import gg.salers.honeybadger.utils.HPacket;
 import gg.salers.honeybadger.utils.PlayerUtils;
 import org.bukkit.potion.PotionEffectType;
@@ -14,19 +15,26 @@ public class JumpA extends Check {
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isMove()) {
-            double limit = 0.42F; //maximum height of jumping
-            limit += PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.JUMP) * 0.1;
-            if (playerData.getMovementProcessor().getAirTicks() > 1 && !playerData.getBukkitPlayerFromUUID().isOnGround()) {
-                if (playerData.getBukkitPlayerFromUUID().getLocation().add(0, 0.4201D, 0).getBlock().isEmpty()) {
-                    if (playerData.getMovementProcessor().getDeltaY() > limit) {
+            final double jumpMotion = 0.42F + (playerData.getBukkitPlayerFromUUID().hasPotionEffect(PotionEffectType.JUMP)
+                    ? PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.JUMP) * 0.1F : 0); //maximum height of jumping
+
+            final CollisionProcessor collisionProcessor = playerData.getCollisionProcessor();
+
+            final boolean exempt = collisionProcessor.isOnSlime() ||
+                    collisionProcessor.isLastGroundSlime() || collisionProcessor.isInLiquid() || collisionProcessor.isBlockNearHead();
+            final boolean jumped = collisionProcessor.getClientAirTicks() == 1 && playerData.getMovementProcessor().getDeltaY() > 0;
+
+            if (jumped && !exempt) {
+                if (playerData.getMovementProcessor().getDeltaY() != jumpMotion) {
+                    if (++buffer > 5)
                         flag(playerData, "dY=" + playerData.getMovementProcessor().getDeltaY());
-                    }
-                }
-
-
+                } else if (buffer > 0) buffer -= 0.2;
             }
 
 
         }
+
+
     }
 }
+

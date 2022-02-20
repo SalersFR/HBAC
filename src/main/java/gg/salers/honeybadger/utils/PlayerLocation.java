@@ -23,6 +23,17 @@ public class PlayerLocation {
         this.timestamp = System.currentTimeMillis();
     }
 
+    public PlayerLocation(final long timestamp, final int tickTime, final double x, final double y, final double z, final float yaw, final float pitch, final Boolean onGround) {
+        this.timestamp = timestamp;
+        this.tickTime = tickTime;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.onGround = onGround;
+    }
+
     public PlayerLocation add(final double x, final double y, final double z) {
         return new PlayerLocation(this.timestamp, this.tickTime, this.x + x, this.y + y, this.z + z, this.yaw, this.pitch, this.onGround);
     }
@@ -84,17 +95,6 @@ public class PlayerLocation {
             return Float.compare(location.pitch, this.pitch) == 0;
         }
         return false;
-    }
-
-    public PlayerLocation(final long timestamp, final int tickTime, final double x, final double y, final double z, final float yaw, final float pitch, final Boolean onGround) {
-        this.timestamp = timestamp;
-        this.tickTime = tickTime;
-        this.x = x;
-        this.y = y;
-        this.z = z;
-        this.yaw = yaw;
-        this.pitch = pitch;
-        this.onGround = onGround;
     }
 
 }
