@@ -1,4 +1,10 @@
 gg\salers\honeybadger\processor\impl\CollisionProcessor.class
+gg\salers\honeybadger\command\impl\HelpCommand.class
+gg\salers\honeybadger\command\impl\ReloadCommand.class
+gg\salers\honeybadger\command\impl\DebugCommand.class
+gg\salers\honeybadger\command\CommandHandler.class
+gg\salers\honeybadger\command\impl\AlertsCommand.class
 gg\salers\honeybadger\processor\impl\VelocityProcessor.class
+gg\salers\honeybadger\command\api\HCommand.class
 gg\salers\honeybadger\check\checks\combat\aim\AimC.class
 gg\salers\honeybadger\processor\impl\ClickProcessor.class

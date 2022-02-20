@@ -7,5 +7,6 @@ import java.lang.annotation.RetentionPolicy;
 public @interface CheckData {
 
     public String name();
+
     public boolean experimental();
 }

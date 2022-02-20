@@ -106,7 +106,7 @@ public abstract class Check {
         vl++;
 
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-            if (onlinePlayers.hasPermission("hbac.alerts")) {
+            if (onlinePlayers.hasPermission("hbac.alerts") && HoneyBadger.getInstance().getAlerting().contains(onlinePlayers)) {
 
                 if (this.experimental) {
                     onlinePlayers.spigot().sendMessage(toSendExp);

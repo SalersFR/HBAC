@@ -3,16 +3,20 @@ package gg.salers.honeybadger.processor.impl;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
+import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.processor.Processor;
 import gg.salers.honeybadger.utils.Cuboid;
 import gg.salers.honeybadger.utils.LocationUtils;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @author Salers
@@ -26,6 +30,7 @@ public class CollisionProcessor extends Processor {
     private boolean nearBoat, inLiquid, inWeb, onClimbable, mathOnGround, onSlime, lastGroundSlime,
             clientOnGround, collisionOnGround, blockNearHead;
     private Cuboid cuboidColl;
+    private List<Block> blocks = new ArrayList<>();
 
     public CollisionProcessor(PlayerData data) {
         super(data);
@@ -40,8 +45,12 @@ public class CollisionProcessor extends Processor {
 
             cuboidColl = new Cuboid(doubles.read(0), doubles.read(1), doubles.read(2));
 
-            final List<Block> blocks = cuboidColl.getBlocks(getData().getBukkitPlayerFromUUID().getWorld());
-            final Location location = new Location(getData().getBukkitPlayerFromUUID().getWorld(), doubles.read(0), doubles.read(1), doubles.read(2));
+            Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> blocks = (cuboidColl.getBlocks(getData().getBukkitPlayerFromUUID().getWorld())));
+
+            if(blocks == null) return;
+
+            final Location location = new Location(getData().getBukkitPlayerFromUUID().getWorld(),
+                    doubles.read(0), doubles.read(1), doubles.read(2));
 
             nearBoat = LocationUtils.isNearBoat(getData().getBukkitPlayerFromUUID());
             inLiquid = blocks.stream().anyMatch(Block::isLiquid);

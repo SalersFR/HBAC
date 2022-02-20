@@ -28,6 +28,7 @@ public class PlayerData {
     private final CheckManager checkManager;
     private final List<PlayerLocation> playerLocationList;
     private final List<Processor> processors = new ArrayList<>();
+    private Check debugging;
     private final Player player;
 
 

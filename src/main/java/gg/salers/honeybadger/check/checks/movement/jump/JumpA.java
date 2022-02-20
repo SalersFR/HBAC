@@ -24,7 +24,7 @@ public class JumpA extends Check {
                     collisionProcessor.isLastGroundSlime() || collisionProcessor.isInLiquid() || collisionProcessor.isBlockNearHead();
             final boolean jumped = collisionProcessor.getClientAirTicks() == 1 && playerData.getMovementProcessor().getDeltaY() > 0;
 
-            if (jumped && !exempt) {
+            if (jumped && !exempt && playerData.getVelocityProcessor().getVelTicks() > 10) {
                 if (playerData.getMovementProcessor().getDeltaY() != jumpMotion) {
                     if (++buffer > 5)
                         flag(playerData, "dY=" + playerData.getMovementProcessor().getDeltaY());

@@ -6,6 +6,7 @@ import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.utils.Cuboid;
 import gg.salers.honeybadger.utils.HPacket;
 import gg.salers.honeybadger.utils.PlayerLocation;
+import lombok.SneakyThrows;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class ReachA extends Check {
         return toReturn;
     }
 
+    @SneakyThrows
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isAttack()) {

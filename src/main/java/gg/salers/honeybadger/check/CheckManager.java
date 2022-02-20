@@ -12,6 +12,7 @@ import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolB;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightA;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightB;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightC;
+import gg.salers.honeybadger.check.checks.movement.jump.JumpA;
 import gg.salers.honeybadger.check.checks.movement.speed.SpeedA;
 import gg.salers.honeybadger.check.checks.movement.step.StepA;
 import gg.salers.honeybadger.data.PlayerData;
@@ -50,8 +51,8 @@ public class CheckManager {
                 new FlightB(),
                 new FlightC(),
                 new SpeedA(),
-                new StepA()
-                //new JumpA()
+                new StepA(),
+                new JumpA()
 
 
         );

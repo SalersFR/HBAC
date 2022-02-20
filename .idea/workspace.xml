@@ -5,43 +5,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca9ffef5-d8ef-46f2-8b2b-795ff9c686af" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimC.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CollisionProcessor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/VelocityProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/CommandHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/api/HCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/impl/AlertsCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/impl/DebugCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/impl/HelpCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/command/impl/ReloadCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE.md" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/HoneyBadger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/HoneyBadger.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/Check.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/Check.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckData.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/CheckManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/aim/AimB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/autoclicker/AutoclickerA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/autoclicker/AutoclickerA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraE.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/killaura/KillAuraE.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/reach/ReachA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/combat/reach/ReachA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/misc/ground/GroundA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/misc/ground/GroundA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightB.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightB.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightC.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/flight/FlightC.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/jump/JumpA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/jump/JumpA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/speed/SpeedA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/speed/SpeedA.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/speed/SpeedB.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/step/StepA.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/check/checks/movement/step/StepA.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerDataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/data/PlayerDataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/BukkitListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/BukkitListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/PacketListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/listener/PacketListener.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/Processor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/Processor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/ClickProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/ClickProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CombatProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CombatProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/MovementProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/MovementProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/NetworkProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/NetworkProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/RotationProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/RotationProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/HPacket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/HPacket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/LocationUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/LocationUtils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CollisionProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/processor/impl/CollisionProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger/utils/MathUtils.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -70,7 +53,12 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/main/java/gg/salers/honeybadger" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Armand\Desktop\OpenSource\HBACr\src\main\java\gg\salers\honeybadger" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
