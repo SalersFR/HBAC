@@ -18,6 +18,7 @@ public class KillAuraB extends Check {
                 setProbabilty(1);
                 flag(playerData, "h=" + hits);
             }
+
         } else if (packet.isArmAnimation()) {
             hits = 0;
         }

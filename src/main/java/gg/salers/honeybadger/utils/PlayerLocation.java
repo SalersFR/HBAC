@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.util.Vector;
 
 @Getter
 @Setter
@@ -21,6 +22,16 @@ public class PlayerLocation {
         this.yaw = yaw;
         this.pitch = pitch;
         this.timestamp = System.currentTimeMillis();
+    }
+
+
+    public PlayerLocation(double x, double y, double z, float yaw, float pitch, long time) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+        this.timestamp = time;
     }
 
     public PlayerLocation(final long timestamp, final int tickTime, final double x, final double y, final double z, final float yaw, final float pitch, final Boolean onGround) {
@@ -53,6 +64,10 @@ public class PlayerLocation {
 
     public Cuboid hitbox() {
         return new Cuboid(this.x, this.y, this.z).add(new Cuboid(-0.3, 0.3, 0.0, 1.8, -0.3, 0.3));
+    }
+
+    public Vector toVec() {
+        return new Vector(x,y,z);
     }
 
     public Cuboid to(final PlayerLocation playerLocation) {

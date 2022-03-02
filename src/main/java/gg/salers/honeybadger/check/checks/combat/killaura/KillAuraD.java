@@ -13,6 +13,7 @@ public class KillAuraD extends Check {
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isAttack()) {
+
             if (playerData.getCombatProcessor().getAttacked().getEntityId() != playerData.getCombatProcessor().getLastAttacked().getEntityId()) {
                 if (++ticks > 1) {
                     flag(playerData, "t=" + ticks);

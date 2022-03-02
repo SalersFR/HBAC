@@ -18,7 +18,7 @@ public class KillAuraE extends Check {
             ticks = 0;
         } else if (packet.isFlying()) {
 
-            if (playerData.getCombatProcessor().getLastAttacked() == null) return;
+            if (playerData.getCombatProcessor().getAttacked() == null) return;
 
             final double deltaXZ = playerData.getMovementProcessor().getDeltaXZ();
             final double lastDeltaXZ = playerData.getMovementProcessor().getLastDeltaXZ();
@@ -33,6 +33,7 @@ public class KillAuraE extends Check {
                     flag(playerData, "a=" + accelerationXZ);
                 }
             } else if (buffer > 0) buffer -= 0.125D;
+
 
 
             this.ticks++;

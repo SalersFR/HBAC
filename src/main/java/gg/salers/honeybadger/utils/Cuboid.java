@@ -32,12 +32,12 @@ public class Cuboid {
     }
 
     public Cuboid(final double x1, final double x2, final double y1, final double y2, final double z1, final double z2) {
-        this.x1 = x1;
-        this.x2 = x2;
+        this.x1 = x1 - 0.3;
+        this.x2 = x2 + 0.3;
         this.y1 = y1;
-        this.y2 = y2;
-        this.z1 = z1;
-        this.z2 = z2;
+        this.y2 = y2 + 1.8;
+        this.z1 = z1 - 0.3;
+        this.z2 = z2 + 0.3;
     }
 
     public static boolean checkBlocks(final Collection<Block> blocks, final Predicate<Material> predicate) {

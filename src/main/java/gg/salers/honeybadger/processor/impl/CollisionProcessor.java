@@ -43,7 +43,7 @@ public class CollisionProcessor extends Processor {
 
             final StructureModifier<Double> doubles = event.getPacket().getDoubles();
 
-            cuboidColl = new Cuboid(doubles.read(0), doubles.read(1), doubles.read(2));
+            cuboidColl = new Cuboid(doubles.read(0), doubles.read(1) - 0.03125, doubles.read(2));
 
             Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> blocks = (cuboidColl.getBlocks(getData().getBukkitPlayerFromUUID().getWorld())));
 
@@ -52,8 +52,9 @@ public class CollisionProcessor extends Processor {
             final Location location = new Location(getData().getBukkitPlayerFromUUID().getWorld(),
                     doubles.read(0), doubles.read(1), doubles.read(2));
 
+
             nearBoat = LocationUtils.isNearBoat(getData().getBukkitPlayerFromUUID());
-            inLiquid = blocks.stream().anyMatch(Block::isLiquid);
+            inLiquid = blocks.stream().anyMatch(Block::isLiquid) | LocationUtils.isInLiquid(getData().getBukkitPlayerFromUUID());
             inWeb = blocks.stream().anyMatch(block -> block.getType() == Material.WEB);
             onClimbable = blocks.stream().anyMatch(block -> block.getType() == Material.LADDER ||
                     block.getType() == Material.VINE) || LocationUtils.isCollidingWithWeb(getData().getBukkitPlayerFromUUID());

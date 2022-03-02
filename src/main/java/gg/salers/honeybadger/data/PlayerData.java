@@ -30,6 +30,7 @@ public class PlayerData {
     private final List<Processor> processors = new ArrayList<>();
     private Check debugging;
     private final Player player;
+    private int totalTicks;
 
 
     private List<Check> checks;
@@ -52,12 +53,14 @@ public class PlayerData {
             public void run() {
                 if (combatProcessor.getAttacked() != null) {
                     final Location loc = combatProcessor.getAttacked().getEyeLocation();
-                    playerLocationList.add(new PlayerLocation(loc.getX(), loc.getY(), loc.getZ(), 0F, 0F));
+                    playerLocationList.add(new PlayerLocation(loc.getX(), loc.getY(), loc.getZ(), 0F, 0F, System.currentTimeMillis()));
                     if (playerLocationList.size() >= 20) {
                         playerLocationList.clear();
                     }
 
+
                 }
+                totalTicks++;
             }
         }.runTaskTimer(HoneyBadger.getInstance(), 0L, 1L);
     }

@@ -25,6 +25,8 @@ public class AimC extends Check {
             final double gcd = rotationProcessor.getExpandedGcdPitch();
             final boolean exempt = !(pitch < 82.5F && pitch > -82.5F) || deltaYaw < 5.0 || Math.abs(deltaYaw - rotationProcessor.getLastDeltaYaw()) < 0.1;
 
+
+
             if (gcd < 131072L && !exempt) {
                 if (buffer < 15) buffer++;
 

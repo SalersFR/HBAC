@@ -21,6 +21,7 @@ public class AimB extends Check {
             final double gcd = rotationProcessor.getGcdPitch();
             final boolean exempt = !(pitch < 82.5F && pitch > -82.5F) || deltaYaw < 5.0;
 
+
             if (gcd < 0.001D && !exempt) {
                 if (++buffer > 7) {
                     flag(playerData, "gcd=" + gcd);

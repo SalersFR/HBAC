@@ -8,11 +8,10 @@ import gg.salers.honeybadger.utils.HPacket;
 @CheckData(name = "KillAura (A)", experimental = false)
 public class KillAuraA extends Check {
 
-
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isAttack()) {
-            long deltaFlying = Math.abs(System.currentTimeMillis() - playerData.getNetworkProcessor().getLastFlying());
+            final long deltaFlying = Math.abs(System.currentTimeMillis() - playerData.getNetworkProcessor().getLastFlying());
             if (deltaFlying < 25L) {
                 if (playerData.getNetworkProcessor().getKpPing() < 175) {
                     if (++buffer > 5) {
@@ -21,6 +20,8 @@ public class KillAuraA extends Check {
                     }
                 }
             } else buffer = 0;
+
+
         }
     }
 }

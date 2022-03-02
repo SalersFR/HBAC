@@ -12,7 +12,7 @@ public class ProtocolA extends Check {
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isMove()) {
-            if (Math.abs(playerData.getBukkitPlayerFromUUID().getLocation().getPitch()) > 90f) {
+            if (Math.abs(playerData.getRotationProcessor().getPitch()) > 90f) {
                 punish(playerData);
             }
         }

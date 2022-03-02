@@ -14,7 +14,7 @@ import java.util.List;
 @Getter
 public class ClickProcessor extends Processor {
 
-    private final List<Integer> samples = new ArrayList<>(25);
+    private final List<Integer> samples = new ArrayList<>();
     private double deviation, kurtosis, variance, skewness, cps;
     private int ticks, outliers, dupls;
 
@@ -42,7 +42,7 @@ public class ClickProcessor extends Processor {
             samples.add(ticks);
             ticks = 0;
 
-            if (samples.size() >= 25) {
+            if (samples.size() > 25) {
                 samples.subList(0, 10).clear();
 
             }

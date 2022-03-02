@@ -16,7 +16,6 @@ public class KillAuraC extends Check {
      * got the idea from GladUrBad
      */
 
-
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isArmAnimation()) {
@@ -26,20 +25,22 @@ public class KillAuraC extends Check {
                 if (playerData.getCombatProcessor().getAttacked().getEntityId() == playerData.getCombatProcessor().
                         getLastAttacked().getEntityId() && lastVictimLocation.getPitch() != playerData.getCombatProcessor().
                         getLastAttacked().getLocation().getPitch()) {
-                    if (attacks >= 80) {
-                        if (++buffer > 2) {
-                            flag(playerData, "a=" + attacks);
-                        }
-                    } else buffer -= buffer > 0 ? 0.25 : 0;
-                }
 
-                attacks = armAnimations = 0;
+                    if (++buffer > 2) {
+                        flag(playerData, "a=" + attacks);
+                    }
+                } else buffer -= buffer > 0 ? 0.25 : 0;
             }
 
-        } else if (packet.isAttack()) {
+            attacks = armAnimations = 0;
+
+
+        } else if (packet.isAttack())
+
+
             attacks++;
 
 
-        }
     }
 }
+

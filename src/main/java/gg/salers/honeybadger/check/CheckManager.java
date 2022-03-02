@@ -15,6 +15,7 @@ import gg.salers.honeybadger.check.checks.movement.flight.FlightC;
 import gg.salers.honeybadger.check.checks.movement.jump.JumpA;
 import gg.salers.honeybadger.check.checks.movement.speed.SpeedA;
 import gg.salers.honeybadger.check.checks.movement.step.StepA;
+import gg.salers.honeybadger.check.checks.misc.timer.TimerA;
 import gg.salers.honeybadger.data.PlayerData;
 import lombok.Getter;
 
@@ -46,6 +47,7 @@ public class CheckManager {
                 new GroundA(),
                 new ProtocolA(),
                 new ProtocolB(),
+                new TimerA(),
 
                 new FlightA(),
                 new FlightB(),

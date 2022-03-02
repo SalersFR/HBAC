@@ -105,16 +105,18 @@ public abstract class Check {
 
         vl++;
 
+        if (this.vl > getPunishVl() && isPunish()) {
+            this.punish(data);
+
+        }
+
         for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
             if (onlinePlayers.hasPermission("hbac.alerts") && HoneyBadger.getInstance().getAlerting().contains(onlinePlayers)) {
 
                 if (this.experimental) {
                     onlinePlayers.spigot().sendMessage(toSendExp);
                 } else onlinePlayers.spigot().sendMessage(toSend);
-                if (this.vl > getPunishVl() && isPunish()) {
-                    this.punish(data);
 
-                }
 
 
             }
@@ -124,10 +126,12 @@ public abstract class Check {
     }
 
     /**
-     * @param toVerbose the thing to broadcast
+     * @param toVerbose the thing to debug
      */
-    protected void verbose(Object toVerbose) {
-        Bukkit.broadcastMessage("§c§lVERBOSE: §f" + toVerbose);
+    protected void debug(Object toVerbose, PlayerData data) {
+        if(data.getDebugging().equals(this)) {
+            data.getPlayer().sendMessage("§c§lDEBUG: &§7" + toVerbose);
+        }
 
     }
 
@@ -162,5 +166,13 @@ public abstract class Check {
 
     public boolean isPunish() {
         return HoneyBadger.getInstance().getConfig().getBoolean(getPath("punish"));
+    }
+
+    public String getFullName() {
+        String name = this.getCheckData().name().split("\\(")[0].replace(" ", "");
+        char type = this.getCheckData().name().split("\\(")[1].split("\\)")[0].replaceAll(" ",
+                "").toCharArray()[0];
+
+        return name + type;
     }
 }

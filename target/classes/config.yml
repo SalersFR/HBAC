@@ -59,6 +59,11 @@ checks:
       enabled: true
       punish: true
       punish-vl: 10
+  timer:
+    a:
+      enabled: true
+      punish: true
+      punish-vl: 10
   flight:
     a:
       enabled: true

@@ -8,9 +8,6 @@ import gg.salers.honeybadger.utils.HPacket;
 @CheckData(name = "Aim (A)", experimental = true)
 public class AimA extends Check {
 
-    private double lastDeltaYaw;
-
-
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isRot()) {
@@ -21,6 +18,10 @@ public class AimA extends Check {
                     flag(playerData, "yA=" + (float) yawAccel + " pA=" + (float) playerData.getRotationProcessor().getDeltaPitch());
                 }
             } else buffer -= buffer > 0 ? 0.25 : 0;
+
+
+
+
 
         }
     }
