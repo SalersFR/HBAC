@@ -16,7 +16,7 @@ public class ClickProcessor extends Processor {
 
     private final List<Integer> samples = new ArrayList<>();
     private double deviation, kurtosis, variance, skewness, cps;
-    private int ticks, outliers, dupls;
+    private int ticks, outliers, dupes;
 
     public ClickProcessor(PlayerData data) {
         super(data);
@@ -35,7 +35,7 @@ public class ClickProcessor extends Processor {
                 this.skewness = MathUtils.getSkewness(samples);
                 this.cps = MathUtils.getCps(samples);
 
-                this.dupls = MathUtils.getDuplicates(samples);
+                this.dupes = MathUtils.getDuplicates(samples);
             }
 
 

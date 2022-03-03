@@ -2,6 +2,8 @@ name: HoneyBadger
 version: 1.0.0
 author: Salers
 main: gg.salers.honeybadger.HoneyBadger
+softdepend:
+  - ViaVersion
 commands:
   hbac:
     permission: hbac.command

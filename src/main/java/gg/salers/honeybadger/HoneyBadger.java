@@ -18,6 +18,9 @@ public class HoneyBadger extends JavaPlugin {
     private static HoneyBadger instance;
 
     @Getter
+    private CommandHandler commandHandler;
+
+    @Getter
     private List<Player> alerting = new ArrayList<>();
 
     @Override
@@ -25,7 +28,7 @@ public class HoneyBadger extends JavaPlugin {
         instance = this;
         loadEvents();
         saveDefaultConfig();
-        getCommand("hbac").setExecutor(new CommandHandler());
+        getCommand("hbac").setExecutor(commandHandler = new CommandHandler());
     }
 
     @Override

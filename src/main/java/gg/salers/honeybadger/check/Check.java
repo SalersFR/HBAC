@@ -61,9 +61,9 @@ public abstract class Check {
 
 
         /** Exempting the player for prevent falses  **/
-        if (data.getBukkitPlayerFromUUID().getAllowFlight() ||
-                data.getBukkitPlayerFromUUID().getGameMode() == GameMode.SPECTATOR ||
-                data.getBukkitPlayerFromUUID().getGameMode() == GameMode.CREATIVE) return;
+        if (data.getPlayer().getAllowFlight() ||
+                data.getPlayer().getGameMode() == GameMode.SPECTATOR ||
+                data.getPlayer().getGameMode() == GameMode.CREATIVE) return;
 
         this.name = this.getCheckData().name().split("\\(")[0].replace(" ", "");
         this.type = this.getCheckData().name().split("\\(")[1].split("\\)")[0].replaceAll(" ",
@@ -72,13 +72,13 @@ public abstract class Check {
 
 
         TextComponent toSendExp = new TextComponent(ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().getConfig()
-                .getString("honeybadger.alert-message").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
+                .getString("honeybadger.alert-message").replaceAll("%player%", data.getPlayer().getName()).
                         replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
                         replaceAll("%exp%", "&7(Experimental)").replaceAll("%vl%",
                         String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty))));
 
         TextComponent toSend = new TextComponent(ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().getConfig()
-                .getString("honeybadger.alert-message").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
+                .getString("honeybadger.alert-message").replaceAll("%player%", data.getPlayer().getName()).
                         replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
                         replaceAll("%exp%", "").replaceAll("%vl%",
                         String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty))));
@@ -92,8 +92,8 @@ public abstract class Check {
                 translateAlternateColorCodes('&', "&8[&c&lHBAC&8]\n" + "&cInfo:&7 " + moreInfo
                         + "\n&cExperimental:&7 " + experimental + "\n&cProbability: &7" + probabilty +
                         "\n\n&cClick to teleport")).create()));
-        toSend.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "tp " + data.getBukkitPlayerFromUUID().getName()));
-        toSendExp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + data.getBukkitPlayerFromUUID().getName()));
+        toSend.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "tp " + data.getPlayer().getName()));
+        toSendExp.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tp " + data.getPlayer().getName()));
 
 
         if (this.probabilty > 5) {
@@ -129,8 +129,8 @@ public abstract class Check {
      * @param toVerbose the thing to debug
      */
     protected void debug(Object toVerbose, PlayerData data) {
-        if(data.getDebugging().equals(this)) {
-            data.getPlayer().sendMessage("§c§lDEBUG: &§7" + toVerbose);
+        if(data.getDebugChecks().contains(this)) {
+            data.getPlayer().sendMessage("§c§l" + getFullName() + "&§7" + toVerbose);
         }
 
     }
@@ -140,13 +140,13 @@ public abstract class Check {
      */
     protected void punish(PlayerData data) {
         String toDispatch = ChatColor.translateAlternateColorCodes('&', HoneyBadger.getInstance().
-                getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getBukkitPlayerFromUUID().getName()).
+                getConfig().getString("honeybadger.punish-command").replaceAll("%player%", data.getPlayer().getName()).
                 replaceAll("%check%", this.name).replaceAll("%type%", String.valueOf(this.type)).
                 replaceAll("%exp%", "").replaceAll("%vl%",
                 String.valueOf(vl)).replaceAll("%probabilty%", String.valueOf(probabilty)));
         Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> Bukkit.dispatchCommand(
                 Bukkit.getConsoleSender(), toDispatch));
-        data.getBukkitPlayerFromUUID().getWorld().strikeLightningEffect(data.getBukkitPlayerFromUUID().getLocation());
+        data.getPlayer().getWorld().strikeLightningEffect(data.getPlayer().getLocation());
         this.vl = this.probabilty = this.delay = 0;
 
 

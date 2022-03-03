@@ -25,7 +25,7 @@ public class KillAuraE extends Check {
 
             final double accelerationXZ = Math.abs(deltaXZ - lastDeltaXZ);
 
-            if (deltaXZ > 0.16 && playerData.getBukkitPlayerFromUUID().isSprinting()
+            if (deltaXZ > 0.16 && playerData.getPlayer().isSprinting()
                     && accelerationXZ < 0.005D && ticks <= 2 && playerData.getCombatProcessor().
                     getLastAttacked().getType() == EntityType.PLAYER) {
                 if (++buffer > 7) {

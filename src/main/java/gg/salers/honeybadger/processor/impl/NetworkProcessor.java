@@ -77,7 +77,7 @@ public class NetworkProcessor extends Processor {
 
 
         try {
-            ProtocolLibrary.getProtocolManager().sendServerPacket(data.getBukkitPlayerFromUUID(), packet);
+            ProtocolLibrary.getProtocolManager().sendServerPacket(data.getPlayer(), packet);
         } catch (InvocationTargetException exception) {
             exception.printStackTrace();
         } catch (NullPointerException e) {

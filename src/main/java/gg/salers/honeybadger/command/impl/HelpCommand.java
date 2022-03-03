@@ -1,25 +1,43 @@
 package gg.salers.honeybadger.command.impl;
 
 
+import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.command.api.HCommand;
 import gg.salers.honeybadger.data.PlayerData;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 
 public class HelpCommand implements HCommand {
 
     @Override
-    public void handle(PlayerData sender, String[] args) {
-        sender.getPlayer().sendMessage(   "§cHoneyBadger\n§c" +
-                "§c\n§c" +
-                "§7- §c/hbac help §7shows this.\n" +
-                "§7- §c/hbac alerts §7toggles the display of flags.\n" +
-                "§7- §c/hbac debug <check> §7sends the debug of the targeted check.\n" +
-                "§7- §c/hbac reload §7 reload all config files.\n" +
-                " \n" +
-                "§cHBAC, made by Salers.\n");
+    public void handle(CommandSender sender, String[] args) {
+        StringBuilder commands = new StringBuilder();
+
+        for (HCommand command : HoneyBadger.getInstance().getCommandHandler().getCommands()) {
+            if(sender instanceof ConsoleCommandSender) {
+                if(command.canConsoleUse()) {
+                    commands.append("- /hbac ").append(command.getName()).append(": ").append(command.getDescription()).append("\n");
+                }
+            } else {
+                commands.append("- /hbac ").append(command.getName()).append(": ").append(command.getDescription()).append("\n");
+            }
+        }
+
+        sender.sendMessage(   "§cHoneyBadger\n§c" + commands.toString() + "§cHBAC, made by Salers.\n");
+    }
+
+    @Override
+    public boolean canConsoleUse() {
+        return true;
     }
 
     @Override
     public String getName() {
         return "help";
+    }
+
+    @Override
+    public String getDescription() {
+        return "shows this";
     }
 }

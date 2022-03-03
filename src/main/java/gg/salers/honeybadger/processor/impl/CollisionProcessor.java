@@ -45,19 +45,19 @@ public class CollisionProcessor extends Processor {
 
             cuboidColl = new Cuboid(doubles.read(0), doubles.read(1) - 0.03125, doubles.read(2));
 
-            Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> blocks = (cuboidColl.getBlocks(getData().getBukkitPlayerFromUUID().getWorld())));
+            Bukkit.getScheduler().runTask(HoneyBadger.getInstance(), () -> blocks = (cuboidColl.getBlocks(getData().getPlayer().getWorld())));
 
             if(blocks == null) return;
 
-            final Location location = new Location(getData().getBukkitPlayerFromUUID().getWorld(),
+            final Location location = new Location(getData().getPlayer().getWorld(),
                     doubles.read(0), doubles.read(1), doubles.read(2));
 
 
-            nearBoat = LocationUtils.isNearBoat(getData().getBukkitPlayerFromUUID());
-            inLiquid = blocks.stream().anyMatch(Block::isLiquid) | LocationUtils.isInLiquid(getData().getBukkitPlayerFromUUID());
+            nearBoat = LocationUtils.isNearBoat(getData().getPlayer());
+            inLiquid = blocks.stream().anyMatch(Block::isLiquid) | LocationUtils.isInLiquid(getData().getPlayer());
             inWeb = blocks.stream().anyMatch(block -> block.getType() == Material.WEB);
             onClimbable = blocks.stream().anyMatch(block -> block.getType() == Material.LADDER ||
-                    block.getType() == Material.VINE) || LocationUtils.isCollidingWithWeb(getData().getBukkitPlayerFromUUID());
+                    block.getType() == Material.VINE) || LocationUtils.isCollidingWithWeb(getData().getPlayer());
             onSlime = blocks.stream().anyMatch(block -> block.getType() == Material.SLIME_BLOCK);
 
             clientOnGround = event.getPacket().getBooleans().read(0);
