@@ -6,6 +6,7 @@ import gg.salers.honeybadger.check.Check;
 import gg.salers.honeybadger.check.CheckManager;
 import gg.salers.honeybadger.processor.Processor;
 import gg.salers.honeybadger.processor.impl.*;
+import gg.salers.honeybadger.utils.ClientVersion;
 import gg.salers.honeybadger.utils.PlayerLocation;
 import lombok.Data;
 import org.bukkit.Location;
@@ -28,10 +29,11 @@ public class PlayerData {
     private final CheckManager checkManager;
     private final List<PlayerLocation> playerLocationList;
     private final List<Processor> processors = new ArrayList<>();
-    private Check debugging;
+    private final List<Check> debugChecks = new ArrayList<>();
     private final Player player;
     private int totalTicks;
 
+    private ClientVersion client;
 
     private List<Check> checks;
 
@@ -53,7 +55,7 @@ public class PlayerData {
             public void run() {
                 if (combatProcessor.getAttacked() != null) {
                     final Location loc = combatProcessor.getAttacked().getEyeLocation();
-                    playerLocationList.add(new PlayerLocation(loc.getX(), loc.getY(), loc.getZ(), 0F, 0F, System.currentTimeMillis()));
+                    playerLocationList.add(new PlayerLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(), System.currentTimeMillis()));
                     if (playerLocationList.size() >= 20) {
                         playerLocationList.clear();
                     }
@@ -63,15 +65,6 @@ public class PlayerData {
                 totalTicks++;
             }
         }.runTaskTimer(HoneyBadger.getInstance(), 0L, 1L);
-    }
-
-    /**
-     * Getting a bukkit player from a uuid
-     *
-     * @return the player reliated to the uuid
-     */
-    public Player getBukkitPlayerFromUUID() {
-        return player;
     }
 
 

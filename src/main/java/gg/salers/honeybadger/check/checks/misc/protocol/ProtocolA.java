@@ -8,13 +8,10 @@ import gg.salers.honeybadger.utils.HPacket;
 @CheckData(name = "Protocol (A)", experimental = true)
 public class ProtocolA extends Check {
 
-
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if (packet.isMove()) {
-            if (Math.abs(playerData.getRotationProcessor().getPitch()) > 90f) {
-                punish(playerData);
-            }
+        if (packet.isMove() && Math.abs(playerData.getRotationProcessor().getPitch()) > 90f) {
+            punish(playerData);
         }
     }
 }

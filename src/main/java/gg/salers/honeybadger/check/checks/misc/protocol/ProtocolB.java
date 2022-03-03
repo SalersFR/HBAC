@@ -11,10 +11,8 @@ public class ProtocolB extends Check {
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if (packet.isUseEntity()) {
-            if (playerData.getCombatProcessor().getAttacked() == playerData.getBukkitPlayerFromUUID()) {
-                punish(playerData);
-            }
+        if (packet.isUseEntity() && playerData.getCombatProcessor().getAttacked() == playerData.getPlayer()) {
+            punish(playerData);
         }
     }
 }

@@ -135,12 +135,6 @@ public class LocationUtils {
     }
 
     public boolean haveABlockNearHead(final Location location) {
-        final Block highest = location.getWorld().getHighestBlockAt(location);
-
-        if (highest.getType() != Material.AIR) {
-            return true;
-        }
-
-        return false;
+        return location.getWorld().getHighestBlockAt(location).getType() != Material.AIR;
     }
 }

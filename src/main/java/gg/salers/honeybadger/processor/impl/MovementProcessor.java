@@ -4,6 +4,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketEvent;
 import gg.salers.honeybadger.data.PlayerData;
 import gg.salers.honeybadger.processor.Processor;
+import gg.salers.honeybadger.utils.PlayerLocation;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +13,7 @@ import lombok.Setter;
 public class MovementProcessor extends Processor {
 
     private double deltaX, deltaZ, deltaXZ, deltaY, lastX, lastY, lastZ, x, y, z, lastDeltaX, lastDeltaY, lastDeltaZ, lastDeltaXZ;
+    private PlayerLocation currentLocation, lastLocation;
     private PlayerData data;
 
     public MovementProcessor(PlayerData data) {
@@ -69,6 +71,13 @@ public class MovementProcessor extends Processor {
             lastDeltaXZ = deltaXZ;
             deltaXZ = Math.hypot(deltaX, deltaZ);
 
+            lastLocation = currentLocation;
+
+            if(event.getPacketType() == PacketType.Play.Client.POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK) {
+                currentLocation = new PlayerLocation(x, y, z, event.getPacket().getFloat().read(0), event.getPacket().getFloat().read(1));
+            } else {
+                currentLocation = new PlayerLocation(x, y, z, event.getPlayer().getLocation().getYaw(), event.getPlayer().getLocation().getPitch());
+            }
 
         }
     }

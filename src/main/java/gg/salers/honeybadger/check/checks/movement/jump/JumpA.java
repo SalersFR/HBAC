@@ -15,8 +15,8 @@ public class JumpA extends Check {
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
         if (packet.isMove()) {
-            final double jumpMotion = 0.42F + (playerData.getBukkitPlayerFromUUID().hasPotionEffect(PotionEffectType.JUMP)
-                    ? PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.JUMP) * 0.1F : 0); //maximum height of jumping
+            final double jumpMotion = 0.42F + (playerData.getPlayer().hasPotionEffect(PotionEffectType.JUMP)
+                    ? PlayerUtils.getPotionLevel(playerData.getPlayer(), PotionEffectType.JUMP) * 0.1F : 0); //maximum height of jumping
 
             final CollisionProcessor collisionProcessor = playerData.getCollisionProcessor();
 

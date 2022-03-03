@@ -30,14 +30,14 @@ public class SpeedA extends Check {
 
 
             // landMovementFactor
-            final float speed = PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.SPEED);
-            final float slow = PlayerUtils.getPotionLevel(playerData.getBukkitPlayerFromUUID(), PotionEffectType.SLOW);
-            double d = 0.10000000149011612;
-            d += d * 0.20000000298023224 * speed;
-            d += d * -0.15000000596046448 * slow;
+            final float speed = PlayerUtils.getPotionLevel(playerData.getPlayer(), PotionEffectType.SPEED);
+            final float slow = PlayerUtils.getPotionLevel(playerData.getPlayer(), PotionEffectType.SLOW);
+            float d = 0.1f;
+            d += d * 0.2f * speed;
+            d += d * -0.15f * slow;
 
             // Sprint desync big gay just assume they are sprinting
-            d += d * 0.30000001192092896;
+            d += d * 0.3f;
 
             final float landMovementFactor = (float) d;
 
@@ -52,8 +52,8 @@ public class SpeedA extends Check {
             } else {
                 prediction = lastDeltaXZ * 0.91f + 0.026f;
             }
-            if (prediction < playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1))
-                prediction = playerData.getBukkitPlayerFromUUID().getWalkSpeed() + 0.02 * (speed + 1);
+            if (prediction < playerData.getPlayer().getWalkSpeed() + 0.02 * (speed + 1))
+                prediction = playerData.getPlayer().getWalkSpeed() + 0.02 * (speed + 1);
 
             // very lazy patch for a false flag
             if (ground > 1) {
@@ -76,7 +76,7 @@ public class SpeedA extends Check {
     }
 
     public float getBlockFriction(PlayerData playerData) {
-        String block = playerData.getBukkitPlayerFromUUID().getLocation().add(0, -1, 0).getBlock().getType().name().toLowerCase();
+        String block = playerData.getPlayer().getLocation().add(0, -1, 0).getBlock().getType().name().toLowerCase();
         return block.equals("blue ice") ? 0.989f : block.contains("ice") ? 0.98f : block.equals("slime") ? 0.8f : 0.6f;
     }
 }

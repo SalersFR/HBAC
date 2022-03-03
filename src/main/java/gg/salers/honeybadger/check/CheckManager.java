@@ -6,9 +6,12 @@ import gg.salers.honeybadger.check.checks.combat.aim.AimC;
 import gg.salers.honeybadger.check.checks.combat.autoclicker.AutoclickerA;
 import gg.salers.honeybadger.check.checks.combat.killaura.*;
 import gg.salers.honeybadger.check.checks.combat.reach.ReachA;
+import gg.salers.honeybadger.check.checks.combat.velocity.VelocityA;
 import gg.salers.honeybadger.check.checks.misc.ground.GroundA;
 import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolA;
 import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolB;
+import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolC;
+import gg.salers.honeybadger.check.checks.misc.protocol.ProtocolD;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightA;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightB;
 import gg.salers.honeybadger.check.checks.movement.flight.FlightC;
@@ -43,10 +46,13 @@ public class CheckManager {
                 new KillAuraD(),
                 new KillAuraE(),
                 new ReachA(),
+                new VelocityA(),
 
                 new GroundA(),
                 new ProtocolA(),
                 new ProtocolB(),
+                new ProtocolC(),
+                new ProtocolD(),
                 new TimerA(),
 
                 new FlightA(),

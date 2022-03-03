@@ -49,7 +49,7 @@ public class VelocityProcessor extends Processor {
         if (event.getPacketType() == PacketType.Play.Server.ENTITY_VELOCITY) {
             final StructureModifier<Integer> ints = event.getPacket().getIntegers();
 
-            if (ints.read(0) == getData().getBukkitPlayerFromUUID().getEntityId()) {
+            if (ints.read(0) == getData().getPlayer().getEntityId()) {
                 getData().getNetworkProcessor().addKeepAliveTask(() -> {
                     velX = ints.read(0) / 8000.0D;
                     velY = ints.read(1) / 8000.0D;

@@ -8,12 +8,14 @@ import gg.salers.honeybadger.command.impl.DebugCommand;
 import gg.salers.honeybadger.command.impl.HelpCommand;
 import gg.salers.honeybadger.command.impl.ReloadCommand;
 import gg.salers.honeybadger.data.PlayerData;
+import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.Level;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.Arrays;
@@ -23,6 +25,7 @@ import java.util.Optional;
 @Log4j2
 public class CommandHandler implements CommandExecutor {
 
+    @Getter
     private final List<HCommand> commands;
 
     public CommandHandler() {
@@ -36,15 +39,8 @@ public class CommandHandler implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player)) {
-            log.log(Level.ERROR, "Sorry, only players can use commands.");
-            return false;
-        }
-
-        PlayerData data = HoneyBadger.getInstance().getPlayerDataManager().getPlayerData((Player) sender);
-
         if (args.length == 0) {
-            data.getPlayer().sendMessage(
+            sender.sendMessage(
                     ChatColor.translateAlternateColorCodes(
                     '&',
                             "&cInvalid argument 'none', try /hbac help."
@@ -61,16 +57,24 @@ public class CommandHandler implements CommandExecutor {
                     command.getName().equalsIgnoreCase(firstArg)).findAny();
 
             if(!subCmd.isPresent()) {
-                data.getPlayer().sendMessage(
+                sender.sendMessage(
                         ChatColor.translateAlternateColorCodes(
                                 '&',
                                 "&cInvalid command argument."
                         )
                 );
-                return false;
+                return true;
             }
 
-            subCmd.ifPresent(oreoCommand -> oreoCommand.handle(data, args));
+            if(sender instanceof Player) {
+                subCmd.get().handle(sender, args);
+            } else if(sender instanceof ConsoleCommandSender) {
+                if(subCmd.get().canConsoleUse()) {
+                    subCmd.get().handle(sender, args);
+                } else {
+                    sender.sendMessage("You must be a player to use this command.");
+                }
+            }
         }
 
         return true;
