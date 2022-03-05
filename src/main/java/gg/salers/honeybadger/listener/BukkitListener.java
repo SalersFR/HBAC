@@ -13,6 +13,8 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class BukkitListener implements PluginMessageListener, Listener {
 
@@ -20,6 +22,7 @@ public class BukkitListener implements PluginMessageListener, Listener {
     public void onJoin(PlayerJoinEvent event) {
         //adding the player's data in the cache
         HoneyBadger.getInstance().getPlayerDataManager().add(event.getPlayer());
+
         //adding the player's channels
         try {
             addChannel(event.getPlayer(),"MC|Brand");
@@ -61,13 +64,13 @@ public class BukkitListener implements PluginMessageListener, Listener {
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
 
         }
     }
 
     private void addChannel(final Player player, final String channel) {
         try {
-            //Redux.sendConsole("adding channel to " + player.getName() + " to " + channel);
             player.getClass().getMethod("addChannel", String.class).invoke(player, channel);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
                 | SecurityException e) {

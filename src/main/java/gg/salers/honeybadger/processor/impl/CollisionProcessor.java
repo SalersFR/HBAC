@@ -38,8 +38,8 @@ public class CollisionProcessor extends Processor {
 
     @Override
     public void processIn(PacketEvent event) {
-        if (event.getPacketType() == PacketType.Play.Client.FLYING || event.getPacketType() == PacketType.Play.Client
-                .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
+        if (event.getPacketType() == PacketType.Play.Client
+                .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
 
             final StructureModifier<Double> doubles = event.getPacket().getDoubles();
 

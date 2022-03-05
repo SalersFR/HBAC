@@ -26,10 +26,15 @@ public class DebugCommand implements HCommand {
             return;
         }
 
-        final String checkName = args[1];
+        StringBuilder checkName = new StringBuilder();
+        int a = args.length - 1;
+        for (int i = 1; i < a; i++) {
+            checkName.append(args[i]).append(" ");
+        }
+        checkName.append(args[a]);
 
-        final Optional<Check> checkOptional = data.getChecks().stream().filter(check -> (check.getType() +
-                check.getName()).equalsIgnoreCase(checkName)).findAny();
+        final Optional<Check> checkOptional = data.getChecks().stream().filter(check -> (check.getName() + " " +
+                check.getType()).equalsIgnoreCase(checkName.toString())).findAny();
 
         if(checkOptional.isPresent()) {
             if (!data.getDebugChecks().contains(checkOptional.get())) {

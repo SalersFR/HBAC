@@ -67,5 +67,15 @@ public class PlayerData {
         }.runTaskTimer(HoneyBadger.getInstance(), 0L, 1L);
     }
 
+    public int getViolations() {
+        int total = 0;
+
+        for (Check check : checks) {
+            total += check.getVl();
+        }
+
+        return total;
+    }
+
 
 }

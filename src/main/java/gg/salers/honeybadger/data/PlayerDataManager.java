@@ -2,6 +2,7 @@ package gg.salers.honeybadger.data;
 
 
 import lombok.Getter;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.Map;
@@ -24,7 +25,7 @@ public class PlayerDataManager {
      * @return a PlayerData from the param player
      **/
 
-    public PlayerData getPlayerData(Player player) {
+    public PlayerData getPlayerData(OfflinePlayer player) {
         return this.playerPlayerDataMap.get(player);
     }
 
