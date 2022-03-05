@@ -54,6 +54,7 @@ public class HoneyBadger extends JavaPlugin {
      **/
 
     private void loadEvents() {
+        new PacketListener();
         BukkitListener bukkitListener = new BukkitListener();
         Bukkit.getPluginManager().registerEvents(bukkitListener, this);
         Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|Brand", bukkitListener);
