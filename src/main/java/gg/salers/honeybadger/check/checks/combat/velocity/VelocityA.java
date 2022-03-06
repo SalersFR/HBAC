@@ -16,8 +16,8 @@ public class VelocityA extends Check {
 
     @Override
     public void onPacket(HPacket packet, PlayerData playerData) {
-        if(packet.isMove()){
-            double y = playerData.getVelocityProcessor().getVelY();
+        if(packet.isMove() && playerData.getVelocityProcessor().getAcceptedVelocity() != null && playerData.getVelocityProcessor().getVelTicks() < 20){
+            double y = playerData.getVelocityProcessor().getAcceptedVelocity().getY();
             int ticks = playerData.getVelocityProcessor().getVelTicks();
 
             double min = (playerData.getClient().getIntVersion() < 9 ? 0.005 : 0.003);
@@ -26,7 +26,12 @@ public class VelocityA extends Check {
 
             if (ticks == 1) {
                 if(y > min && (applied < 0.99 || Double.isInfinite(applied))) {
-                    flag(playerData, "s=" + y + ", c=" + playerData.getMovementProcessor().getDeltaY());
+                    if(buffer++ > 2) {
+                        flag(playerData, "s=" + y + ", c=" + playerData.getMovementProcessor().getDeltaY());
+                        buffer = 0;
+                    }
+                } else {
+                    buffer = Math.max(0,buffer - 0.2);
                 }
             }
         }

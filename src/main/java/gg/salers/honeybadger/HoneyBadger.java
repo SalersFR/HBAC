@@ -33,6 +33,8 @@ public class HoneyBadger extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        alerting.clear();
+        commandHandler = null;
         instance = null; //for preventing memory leaks
     }
 
@@ -52,7 +54,10 @@ public class HoneyBadger extends JavaPlugin {
      **/
 
     private void loadEvents() {
-        Bukkit.getPluginManager().registerEvents(new BukkitListener(), this);
         new PacketListener();
+        BukkitListener bukkitListener = new BukkitListener();
+        Bukkit.getPluginManager().registerEvents(bukkitListener, this);
+        Bukkit.getMessenger().registerIncomingPluginChannel(this, "MC|Brand", bukkitListener);
+
     }
 }

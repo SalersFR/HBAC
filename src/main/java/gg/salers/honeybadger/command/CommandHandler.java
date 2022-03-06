@@ -3,10 +3,7 @@ package gg.salers.honeybadger.command;
 
 import gg.salers.honeybadger.HoneyBadger;
 import gg.salers.honeybadger.command.api.HCommand;
-import gg.salers.honeybadger.command.impl.AlertsCommand;
-import gg.salers.honeybadger.command.impl.DebugCommand;
-import gg.salers.honeybadger.command.impl.HelpCommand;
-import gg.salers.honeybadger.command.impl.ReloadCommand;
+import gg.salers.honeybadger.command.impl.*;
 import gg.salers.honeybadger.data.PlayerData;
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
@@ -33,7 +30,8 @@ public class CommandHandler implements CommandExecutor {
                 new AlertsCommand(),
                 new HelpCommand(),
                 new DebugCommand(),
-                new ReloadCommand()
+                new ReloadCommand(),
+                new InfoCommand()
         );
     }
 

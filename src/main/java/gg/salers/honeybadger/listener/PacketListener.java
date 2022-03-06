@@ -24,14 +24,17 @@ public class PacketListener {
                 PlayerData data = HoneyBadger.getInstance().getPlayerDataManager().
                         getPlayerData(event.getPlayer());
 
-                /** handling data processor using ingoing packets**/
-                for (Processor processors : data.getProcessors())
-                    processors.processIn(event);
+                if(data != null) {
 
-                /** handling all PlayerData's Checks **/
-                for (Check checks : data.getChecks()) {
-                    //if (checks.isEnabled())
-                    checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
+                    /** handling data processor using ingoing packets**/
+                    for (Processor processors : data.getProcessors())
+                        processors.processIn(event);
+
+                    /** handling all PlayerData's Checks **/
+                    for (Check checks : data.getChecks()) {
+                        //if (checks.isEnabled())
+                        checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
+                    }
                 }
             }
 
@@ -42,16 +45,18 @@ public class PacketListener {
                 PlayerData data = HoneyBadger.getInstance().getPlayerDataManager().
                         getPlayerData(event.getPlayer());
 
+                if(data != null) {
 
-                /** handling data processor using outgoing packets**/
-                for (Processor processors : data.getProcessors())
-                    processors.processOut(event);
+                    /** handling data processor using outgoing packets**/
+                    for (Processor processors : data.getProcessors())
+                        processors.processOut(event);
 
 
-                /** handling all PlayerData's Checks **/
-                for (Check checks : data.getChecks()) {
-                    if (checks.isEnabled())
-                        checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
+                    /** handling all PlayerData's Checks **/
+                    for (Check checks : data.getChecks()) {
+                        if (checks.isEnabled())
+                            checks.onPacket(new HPacket(event.getPacketType(), event.getPacket()), data);
+                    }
                 }
             }
 

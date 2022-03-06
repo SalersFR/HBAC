@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Getter
 @Setter
@@ -24,6 +25,7 @@ public class NetworkProcessor extends Processor {
     private long lastServerKeepAlive, lastFlying, kpId;
     private PlayerData data;
     private Map<Long, List<Runnable>> keepAliveTasks = new HashMap<>();
+    private Map<Integer, List<Runnable>> transactionTasks = new HashMap<>();
 
     public NetworkProcessor(PlayerData data) {
         super(data);
@@ -45,6 +47,16 @@ public class NetworkProcessor extends Processor {
                 .POSITION_LOOK || event.getPacketType() == PacketType.Play.Client.LOOK || event.getPacketType() == PacketType.Play.Client.POSITION) {
             lastFlying = System.currentTimeMillis();
         }
+
+        if(event.getPacketType() == PacketType.Play.Client.TRANSACTION) {
+            final int id = event.getPacket().getIntegers().read(0);
+
+            if (transactionTasks.containsKey(id)) {
+                transactionTasks.get(id).forEach(Runnable::run);
+                transactionTasks.remove(id);
+            }
+
+        }
     }
 
     @Override
@@ -53,6 +65,27 @@ public class NetworkProcessor extends Processor {
             lastServerKeepAlive = System.currentTimeMillis();
         }
 
+    }
+
+    public int addTransaction(final Runnable runnable) {
+        int random = ThreadLocalRandom.current().nextInt(0, 32167);
+
+        if (!this.transactionTasks.containsKey(random)) {
+            this.transactionTasks.put(random, new ArrayList<>());
+        }
+
+        transactionTasks.get(random).add(runnable);
+
+        PacketContainer packet = ProtocolLibrary.getProtocolManager().createPacket(PacketType.Play.Client.TRANSACTION);
+        packet.getIntegers().write(0, random);
+
+        try {
+            ProtocolLibrary.getProtocolManager().sendServerPacket(data.getPlayer(), packet);
+        } catch(Exception e) {
+            // silent
+        }
+
+        return random;
     }
 
     /**
